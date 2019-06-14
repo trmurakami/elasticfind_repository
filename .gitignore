@@ -1,3 +1,4 @@
 composer.lock
 composer.phar
 vendor/
+inc/config.php
