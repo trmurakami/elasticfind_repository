@@ -1,5 +1,6 @@
 {
     "require": {
-        "gettext/gettext": "^4.6"
+        "gettext/gettext": "^4.6",
+        "elasticsearch/elasticsearch": "^7.0"
     }
 }
