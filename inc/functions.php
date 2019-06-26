@@ -15,6 +15,9 @@ if (file_exists('uspfind_core/uspfind_core.php')) {
     include '../../uspfind_core/uspfind_core.php';
 }
 
+use Seboettg\CiteProc\CiteProc;
+
+
 /**
  * Record
  *
@@ -516,20 +519,20 @@ class Record
         }
     }
 
-    public function citation($t, $record)
+    function citation($t, $record)
     {
         /* Citeproc-PHP*/
 
-        $csl_abnt = file_get_contents('inc/citeproc-php/styles/abnt.csl');
-        $csl_apa = file_get_contents('inc/citeproc-php/styles/apa.csl');
-        $csl_nlm = file_get_contents('inc/citeproc-php/styles/nlm.csl');
-        $csl_vancouver = file_get_contents('inc/citeproc-php/styles/vancouver.csl');
-        $lang = "br";
-        //$citeproc_abnt = new CiteProc($csl_abnt, $lang);
-        //$citeproc_apa = new CiteProc($csl_apa, $lang);
-        //$citeproc_nlm = new CiteProc($csl_nlm, $lang);
-        //$citeproc_vancouver = new CiteProc($csl_nlm, $lang);
-        $mode = "reference";
+        global $style_abnt;
+        global $style_apa;
+        global $style_nlm;
+        global $style_vancouver;
+        
+        
+        $citeproc_abnt = new CiteProc($style_abnt, "pt-BR");
+        $citeproc_apa = new CiteProc($style_apa, "en-US");
+        $citeproc_nlm = new CiteProc($style_nlm, "en-US");
+        $citeproc_vancouver = new CiteProc($style_vancouver, "en-US");
         echo '<div class="uk-grid-small uk-child-width-auto" uk-grid>';
             echo '<div><a class="uk-button uk-button-text" href="item/'.$record['_id'].'">'.$t->gettext('Ver registro completo').'</a></div>';
             echo '<div><a class="uk-button uk-button-text" href="#" uk-toggle="target: #citacao'.$record['_id'].'; animation: uk-animation-fade">'.$t->gettext('Como citar').'</a> </div>';
@@ -541,22 +544,19 @@ class Record
                     echo '<li class="uk-margin-top">';
                     echo '<p><strong>ABNT</strong></p>';
                     $data = Citation::citationQuery($record["_source"]);
-                    //print_r($citeproc_abnt->render($data, $mode));
+                    print_r($citeproc_abnt->render($data, "bibliography"));
                     echo '</li>';
                     echo '<li class="uk-margin-top">';
                     echo '<p><strong>APA</strong></p>';
-                    $data = Citation::citationQuery($record["_source"]);
-                    //print_r($citeproc_apa->render($data, $mode));
+                    print_r($citeproc_apa->render($data, "bibliography"));
                     echo '</li>';
                     echo '<li class="uk-margin-top">';
                     echo '<p><strong>NLM</strong></p>';
-                    $data = Citation::citationQuery($record["_source"]);
-                    //print_r($citeproc_nlm->render($data, $mode));
+                    print_r($citeproc_nlm->render($data, "bibliography"));
                     echo '</li>';
                     echo '<li class="uk-margin-top">';
                     echo '<p><strong>Vancouver</strong></p>';
-                    $data = Citation::citationQuery($record["_source"]);
-                    //print_r($citeproc_vancouver->render($data, $mode));
+                    print_r($citeproc_vancouver->render($data, "bibliography"));
                     echo '</li>';
                 echo '</ul>';
             echo '</li>';

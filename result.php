@@ -85,10 +85,12 @@ $total = $cursor["hits"]["total"];
                             <div class="uk-width-1-1 uk-margin-top uk-description-list-divider">
                                 <ul class="uk-list uk-list-divider">
                                     <?php
+
                                     foreach ($cursor["hits"]["hits"] as $r) {
                                         $record = new Record($r, $show_metrics);
-                                        $record->simpleRecordMetadata($t);
+                                        $record->simpleRecordMetadata($t);  
                                     }
+                                    
                                     ?>
                                 </ul>
                             </div>
