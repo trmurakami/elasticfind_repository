@@ -192,10 +192,6 @@ class Record
         //    }
         //}
 
-        $this->citation($t, $this->completeRecord);
-
-
-
         echo '</article>';
 
         echo '</div>';

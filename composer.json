@@ -30,7 +30,8 @@
         "elasticsearch/elasticsearch": "^7.0",
         "citation-style-language/locales":"@dev",
         "citation-style-language/styles-distribution":"@dev",
-        "seboettg/citeproc-php": "^2"
+        "seboettg/citeproc-php": "^2",
+        "voku/anti-xss": "^4.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15",
