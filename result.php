@@ -60,7 +60,6 @@ $total = $cursor["hits"]["total"]["value"];
 
     </head>
     <body>
-
         <?php
         if (file_exists("inc/analyticstracking.php")) {
             include_once "inc/analyticstracking.php";
@@ -68,15 +67,88 @@ $total = $cursor["hits"]["total"]["value"];
         ?>
         <!-- TOP -->
         <div class="top-wrap uk-position-relative uk-background-secondary">
+            <div class="uk-section uk-section-default" style="padding:0">
 
-            <!-- NAV -->
-            <div class="uk-section uk-section-default">
+                <!-- NAV -->
                 <?php require 'inc/navbar.php'; ?>
-            </div>
-            <!-- /NAV -->
+                <!-- /NAV -->
             
-            <div class="uk-section uk-section-default">
                 <div class="uk-container">
+
+                <!-- NEW SEARCH -->
+
+                <div class="uk-width-1-1@s uk-width-1-1@m">
+                    <nav class="uk-navbar-container uk-margin" uk-navbar>
+                        <div class="nav-overlay uk-navbar-left">
+                            <a class="uk-navbar-item uk-logo" uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"><?php echo $t->gettext('Clique para uma nova pesquisa'); ?></a>
+                        </div>
+                        <div class="nav-overlay uk-navbar-right">
+                            <a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+                        </div>
+                        <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+                        <div class="uk-navbar-item uk-width-expand">
+                        <form class="uk-search uk-search-navbar uk-width-1-1">
+                            <input class="uk-search-input" type="search" name="search[]" placeholder="<?php echo $t->gettext('Nova pesquisa...'); ?>" autofocus>
+                            </form>
+                        </div>
+
+                        <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+
+                        </div>
+                    </nav>
+                </div>
+
+                <!-- /NEW SEARCH -->
+
+
+                <!-- FILTERS -->
+                <?php if (!empty($_SERVER["QUERY_STRING"])) : ?>
+                <p class="uk-margin-top" uk-margin>
+                    <a class="uk-button uk-button-default uk-button-small" href="index.php"><?php echo $t->gettext('Começar novamente'); ?></a>
+                    <?php
+                    if (!empty($_GET["search"])) {
+                        foreach ($_GET["search"] as $querySearch) {
+                            $querySearchArray[] = $querySearch;
+                            $name_field = explode(":", $querySearch);
+                            $querySearch = str_replace($name_field[0].":", "", $querySearch);
+                            $diff["search"] = array_diff($_GET["search"], $querySearchArray);
+                            $url_push = $_SERVER['SERVER_NAME'].$_SERVER["SCRIPT_NAME"].'?'.http_build_query($diff);
+                            echo '<a class="uk-button uk-button-default uk-button-small" href="http://'.$url_push.'">'.$querySearch.' <span uk-icon="icon: close; ratio: 1"></span></a>';
+                            unset($querySearchArray);
+                        }
+                    }
+
+                    if (!empty($_GET["filter"])) {
+                        foreach ($_GET["filter"] as $filters) {
+                            $filters_array[] = $filters;
+                            $name_field = explode(":", $filters);
+                            $filters = str_replace($name_field[0].":", "", $filters);
+                            $diff["filter"] = array_diff($_GET["filter"], $filters_array);
+                            $url_push = $_SERVER['SERVER_NAME'].$_SERVER["SCRIPT_NAME"].'?'.http_build_query($diff);
+                            echo '<a class="uk-button uk-button-primary uk-button-small" href="http://'.$url_push.'">Filtrado por: '.$filters.' <span uk-icon="icon: close; ratio: 1"></span></a>';
+                            unset($filters_array);
+                        }
+                    }
+
+                    if (!empty($_GET["notFilter"])) {
+                        foreach ($_GET["notFilter"] as $notFilters) {
+                            $notFiltersArray[] = $notFilters;
+                            $name_field = explode(":", $notFilters);
+                            $notFilters = str_replace($name_field[0].":", "", $notFilters);
+                            $diff["notFilter"] = array_diff($_GET["notFilter"], $notFiltersArray);
+                            $url_push = $_SERVER['SERVER_NAME'].$_SERVER["SCRIPT_NAME"].'?'.http_build_query($diff);
+                            echo '<a class="uk-button uk-button-danger uk-button-small" href="http://'.$url_push.'">Ocultando: '.$notFilters.' <span uk-icon="icon: close; ratio: 1"></span></a>';
+                            unset($notFiltersArray);
+                        }
+                    }
+                    ?>
+
+                </p>
+                <?php endif;?>
+                <!-- /FILTERS -->
+
+
+
                     <div class="uk-grid" data-ukgrid>
                         <div class="uk-width-2-3@m">
 
