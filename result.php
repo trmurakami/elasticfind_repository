@@ -199,18 +199,18 @@ $total = $cursor["hits"]["total"]["value"];
                             $facets->facet("authorUSP.name", 150, $t->gettext('Autores USP'), null, "_term", $_GET["search"], true);
                             $facets->facet("datePublished", 120, $t->gettext('Ano de publicação'), "desc", "_term", $_GET["search"], true);
                             $facets->facet("about", 50, $t->gettext('Assuntos'), null, "_term", $_GET["search"], true);
-                            $facets->facet("language", 40, $t->gettext('Idioma'), null, "_term", $_GET["search"]);
+                            $facets->facet("language", 40, $t->gettext('Idioma'), null, "_term", $_GET["search"], true);
                             $facets->facet("isPartOf.name", 50, $t->gettext('Título da fonte'), null, "_term", $_GET["search"], true);
                             $facets->facet("publisher.organization.name", 50, $t->gettext('Editora'), null, "_term", $_GET["search"], true);
-                            $facets->facet("releasedEvent", 50, $t->gettext('Nome do evento'), null, "_term", $_GET["search"]);
-                            $facets->facet("country", 200, $t->gettext('País de publicação'), null, "_term", $_GET["search"]);
+                            $facets->facet("releasedEvent", 50, $t->gettext('Nome do evento'), null, "_term", $_GET["search"], true);
+                            $facets->facet("country", 200, $t->gettext('País de publicação'), null, "_term", $_GET["search"], true);
                             $facets->facet("USP.grupopesquisa", 100, "Grupo de pesquisa", null, "_term", $_GET["search"]);
                             $facets->facet("funder.name", 50, $t->gettext('Agência de fomento'), null, "_term", $_GET["search"]);
                             $facets->facet("USP.indexacao", 50, $t->gettext('Indexado em'), null, "_term", $_GET["search"]);
                             ?>
                             <li class="uk-nav-header"><?php echo $t->gettext('Colaboração institucional'); ?></li>
                             <?php
-                            $facets->facet("author.person.affiliation.name", 50, $t->gettext('Afiliação dos autores externos'), null, "_term", $_GET["search"]);
+                            $facets->facet("author.person.affiliation.name", 50, $t->gettext('Afiliação dos autores externos'), null, "_term", $_GET["search"], true);
                             $facets->facet("author.person.affiliation.location", 50, $t->gettext('País das instituições de afiliação dos autores externos'), null, "_term", $_GET["search"]);
                             ?>
                             <li class="uk-nav-header"><?php echo $t->gettext('Métricas do periódico'); ?></li>
@@ -255,9 +255,14 @@ $total = $cursor["hits"]["total"]["value"];
 
                         </div>
                     </div>
+                    <hr class="uk-grid-divider">
+                    <?php require 'inc/footer.php'; ?>
+
                 </div>
-            </div>           
+            </div>
         </div>
+
+     
 
         <!-- JS FILES -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit.min.js"></script>

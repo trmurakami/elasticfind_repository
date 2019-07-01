@@ -1,0 +1,5 @@
+ErrorDocument 404 http://143.107.154.43/uspfind/404.php
+
+RewriteEngine On
+
+RewriteRule ^item/([-\w]+)$ node.php?_id=$1 [NC,L]

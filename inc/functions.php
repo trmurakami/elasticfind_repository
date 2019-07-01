@@ -36,6 +36,7 @@ class Record
         $this->name = $record["_source"]["name"];
         $this->base = $record["_source"]["base"][0];
         $this->type = ucfirst(strtolower($record["_source"]["type"]));
+        $this->originalType = ucfirst(strtolower($record["_source"]["original"]["type"]));
         if (isset($record["_source"]["datePublished"])) {
             $this->datePublished = $record["_source"]["datePublished"];
         }
@@ -207,7 +208,7 @@ class Record
     {
         echo '<article class="uk-article">';
         echo '<p class="uk-article-meta">';
-        echo '<a href="<?php echo $url_base ?>/result.php?filter[]=type:&quot;'.$this->type.'&quot;">'.$this->type.'</a>';
+        echo '<a href="<?php echo $url_base ?>/result.php?filter[]=type:&quot;'.$this->type.'&quot;">'.$this->type.'</a> | <a href="<?php echo $url_base ?>/result.php?filter[]=type:&quot;'.$this->originalType.'&quot;">'.$this->originalType.'</a>';
         echo '</p>';
         echo '<h1 class="uk-article-title uk-margin-remove-top uk-link-reset" style="font-size:150%">'.$this->name.' ('.$this->datePublished.')</h1>';
         echo '<ul class="uk-list uk-list-striped uk-text-small">';
@@ -438,12 +439,14 @@ class Record
             $this->onlineAccess($t);
         }
 
+        $this->citation($t, $this->completeRecord);
+
     }
 
     public function onlineAccess($t)
     {
 
-        echo '<div class="uk-alert-primary" uk-alert>';
+        echo '<div class="uk-alert-primary" style="padding:25px" uk-alert>';
         echo '<p class="uk-text-small">'.$t->gettext('Acesso online ao documento').'</p>';
         if (!empty($this->url)) {
             foreach ($this->url as $url) {
@@ -529,11 +532,7 @@ class Record
         $citeproc_apa = new CiteProc($style_apa, "en-US");
         $citeproc_nlm = new CiteProc($style_nlm, "en-US");
         $citeproc_vancouver = new CiteProc($style_vancouver, "en-US");
-        echo '<div class="uk-grid-small uk-child-width-auto" uk-grid>';
-            echo '<div><a class="uk-button uk-button-text" href="item/'.$record['_id'].'">'.$t->gettext('Ver registro completo').'</a></div>';
-            echo '<div><a class="uk-button uk-button-text" href="#" uk-toggle="target: #citacao'.$record['_id'].'; animation: uk-animation-fade">'.$t->gettext('Como citar').'</a> </div>';
-        echo '</div>';
-        echo '<div id="citacao'.$record['_id'].'" hidden="hidden">';
+        echo '<div id="citacao'.$record['_id'].'" >';
             echo '<li class="uk-h6 uk-margin-top">';
                 echo '<div class="uk-alert-danger" uk-alert>A citação é gerada automaticamente e pode não estar totalmente de acordo com as normas</div>';
                 echo '<ul>';
