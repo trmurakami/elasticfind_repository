@@ -46,7 +46,7 @@ $total = $cursor["hits"]["total"]["value"];
         <?php 
         require 'inc/meta-header.php';        
         ?>
-        <title>BDPI USP - Resultado de Busca - </title>
+        <title><?php echo $branch_abrev ?> - <?php echo $t->gettext('Resultado de Busca'); ?></title>
 
     </head>
     <body>
