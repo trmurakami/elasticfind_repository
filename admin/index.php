@@ -15,12 +15,14 @@
         <?php require 'inc/navbar.php'; ?>
         <div class="uk-container uk-margin-large-top">
 
+        <h3>Área de administração e gerenciamento</h3>
+
 
         <?php if(!empty($_SESSION['oauthuserdata'])) : ?>
 
             <?php if (in_array($_SESSION['oauthuserdata']->{'loginUsuario'}, $staffUsers)) : ?>
 
-                <h2>Área de administração e gerenciamento</h2>
+                
                 <div class="uk-grid" uk-grid>
                     <div class="uk-width-2-4@">
                         <p><a href="autoridades.php">Atualizar autoridades</a></p>
@@ -34,9 +36,11 @@
             <?php endif; ?>
 
         <?php else: ?>
+            <br/><br/><br/>
             <p>Você não está logado</p>
+            <br/><br/><br/>
         <?php endif; ?>
-
+        <hr class="uk-grid-divider">
         <?php require 'inc/footer.php'; ?>
 
         </div>
