@@ -13,14 +13,6 @@
 
 require 'inc/config.php';
 
-// if (isset($_GET["search"])) {
-//     foreach ($_GET["search"] as $getSearch) {
-//         $getCleaned[] = htmlspecialchars($getSearch, ENT_QUOTES);
-//     }
-//     unset($_GET["search"]);
-//     $_GET["search"] = $getCleaned;
-// }
-
 if (isset($fields)) {
     $_GET["fields"] = $fields;
 }
@@ -51,12 +43,10 @@ $total = $cursor["hits"]["total"]["value"];
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php 
+        require 'inc/meta-header.php';        
+        ?>
         <title>BDPI USP - Resultado de Busca - </title>
-        <link rel="icon" href="img/favicon.ico">
-        <!-- CSS FILES -->
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/css/uikit.min.css">
 
     </head>
     <body>

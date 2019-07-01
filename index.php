@@ -1,18 +1,15 @@
-<?php
-
-    require 'inc/config.php';
-    //require 'inc/meta-header.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php
+        require 'inc/config.php';
+        require 'inc/meta-header.php';
+        ?>    
+
         <title>Biblioteca Digital de Produção Intelectual da Universidade de São Paulo</title>
-        <link rel="icon" href="img/favicon.ico">
-        <!-- CSS FILES -->
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/css/uikit.min.css">
+
         <link rel="stylesheet" type="text/css" href="https://zzseba78.github.io/Kick-Off/css/marketing.css">
+
     </head>
     <body>
         <!-- TOP -->
@@ -67,7 +64,7 @@
                                 </div>
                             </div>
                             <div class="uk-margin">
-                                <label class="uk-form-label" for="form-stacked-select"><?php echo $t->gettext('Selecione a base'); ?></label>
+                                <label class="uk-form-label" for="form-stacked-select"><?php echo $t->gettext('Filtre sua busca por base'); ?></label>
                                 <div class="uk-form-controls">
                                     <select class="uk-select" id="form-stacked-select" name="filter[]">
                                         <option disabled selected value><?php echo $t->gettext('Todas as bases'); ?></option>
@@ -77,7 +74,7 @@
                                 </div>
                             </div>
                              <div class="uk-margin">
-                                <label class="uk-form-label" for="form-stacked-select"><?php echo $t->gettext('Selecione uma Unidade USP para filtrar a busca'); ?></label>
+                                <label class="uk-form-label" for="form-stacked-select"><?php echo $t->gettext('Filtre sua busca por Unidade USP'); ?></label>
                                 <div class="uk-form-controls">
                                     <select class="uk-select" id="form-stacked-select" name="filter[]">
                                         <option disabled selected value><?php echo $t->gettext('Todas as Unidades USP'); ?></option>
@@ -463,10 +460,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
         </div>
-        <!-- /OFFCANVAS -->
-        
-        <!-- JS FILES -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit-icons.min.js"></script>
+        <!-- /OFFCANVAS -->        
+
     </body>
 </html>

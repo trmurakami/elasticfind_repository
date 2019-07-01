@@ -3,12 +3,12 @@
         <nav class="uk-navbar uk-navbar-container uk-navbar-transparent" data-uk-navbar>
             <div class="uk-navbar-left">
                 <div class="uk-navbar-item uk-padding-remove-horizontal">
-                    <a class="uk-logo" title="Biblioteca Digital da Produção Intelectual da USP" href="index.php"><img src="img/marketing-logo.svg" alt="Biblioteca Digital da Produção Intelectual da USP"></a>
+                    <a class="uk-logo" title="Biblioteca Digital da Produção Intelectual da USP" href="<?php echo "$url_base/"?>index.php"><img src="img/marketing-logo.svg" alt="Biblioteca Digital da Produção Intelectual da USP"></a>
                 </div>
             </div>
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav uk-visible@s">
-                    <li class="uk-active uk-visible@m"><a href="index.php" data-uk-icon="home"></a></li>
+                    <li class="uk-active uk-visible@m"><a href="<?php echo "$url_base/"?>index.php" data-uk-icon="home"></a></li>
                     <li><a href="">Busca avançada</a></li>
                     <li>
                         <a href="#" data-uk-icon="chevron-down">SIBI USP</a>
