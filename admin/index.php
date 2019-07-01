@@ -15,7 +15,13 @@
             $params["size"] = 0;
             $params["body"] = $query; 
             $cursor = $client->search($params);
-            $totalWithDOI = $cursor["hits"]["total"];
+            $totalWithDOI = $cursor["hits"]["total"]["value"];
+
+            /* Get Stats */
+
+            $resultCrossref = AdminStats::source("crossref");
+            $resultDimensions = AdminStats::source("dimensions");  
+            $resultUnpaywall = AdminStats::source("unpaywall");          
 
         ?>
         <title><?php echo $branch_abrev ?> - <?php echo $t->gettext('Administração'); ?></title>
@@ -30,7 +36,7 @@
         <h4><?php echo $t->gettext('Estatísticas de coleta de fontes externas'); ?></h4>
 
         <div class="uk-alert-warning" uk-alert>
-            <p><?php echo $t->gettext('Total de registros com DOI'); ?>: <b><?php echo $totalWithDOI["value"]; ?></b></p>
+            <p><?php echo $t->gettext('Total de registros com DOI'); ?>: <b><?php echo $totalWithDOI; ?></b></p>
         </div>
 
         <table class="uk-table">
@@ -42,29 +48,33 @@
                     <th><?php echo $t->gettext('Registros registro com erro'); ?></th>
                     <th><?php echo $t->gettext('Total de registros coletados'); ?></th>
                     <th><?php echo $t->gettext('Percentual coletado'); ?></th>
+                    <th><?php echo $t->gettext('Script'); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="uk-text-bold"><a href="https://github.com/CrossRef/rest-api-doc">Crossref</a></td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0%</td>
+                    <td><?php echo $resultCrossref["foundInSource"]; ?></td>
+                    <td><?php echo $resultCrossref["notFoundInSource"]; ?></td></td>
+                    <td><?php echo $resultCrossref["totalCollectedInSource"]; ?></td>
+                    <td><?php echo number_format(($resultCrossref["totalCollectedInSource"] * 100) / $totalWithDOI, 2, '.', ''); ?>%</td>
+                    <td><a href="../tools/collect_crossref.php">Script</a></td>
                 </tr>
                 <tr>
                     <td class="uk-text-bold"><a href="https://dimensions.figshare.com/articles/Dimensions_Metrics_API_Documentation/5783694">Dimensions</a></td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0%</td>
+                    <td><?php echo $resultDimensions["foundInSource"]; ?></td>
+                    <td><?php echo $resultDimensions["notFoundInSource"]; ?></td>
+                    <td><?php echo $resultDimensions["totalCollectedInSource"]; ?></td>
+                    <td><?php echo number_format(($resultDimensions["totalCollectedInSource"] * 100) / $totalWithDOI, 2, '.', ''); ?>%</td>
+                    <td><a href="../tools/collect_dimensions.php">Script</a></td>
                 </tr>
                 <tr>
                     <td class="uk-text-bold"><a href="https://unpaywall.org/products/api">Unpaywall</a></td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0%</td>
+                    <td><?php echo $resultUnpaywall["foundInSource"]; ?></td>
+                    <td><?php echo $resultUnpaywall["notFoundInSource"]; ?></td>
+                    <td><?php echo $resultUnpaywall["totalCollectedInSource"]; ?></td>
+                    <td><?php echo number_format(($resultUnpaywall["totalCollectedInSource"] * 100) / $totalWithDOI, 2, '.', ''); ?>%</td>
+                    <td><a href="../tools/collect_unpaywall.php">Script</a></td>
                 </tr>                
             </tbody>
         </table>

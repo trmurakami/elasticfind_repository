@@ -571,6 +571,68 @@ class Record
     }
 }
 
+class AdminStats 
+{
+    public static function source($source) 
+    {
+        global $client;
+        global $index;
+        $params = [];
+        $params["index"] = $index;
+        $params["size"] = 0;
+
+        /* Get total collected in source */
+        $query["query"]["query_string"]["query"] = "+_exists_:USP.$source";        
+        $params["body"] = $query; 
+        $cursorTotal = $client->search($params);
+        $result["totalCollectedInSource"] = $cursorTotal["hits"]["total"]["value"];
+
+        /* Get total found in source */
+        $query["query"]["query_string"]["query"] = "USP.$source.found:true";        
+        $params["body"] = $query; 
+        $cursorFound = $client->search($params);
+        $result["foundInSource"] = $cursorFound["hits"]["total"]["value"]; 
+        
+        /* Get total not found in source */
+        $query["query"]["query_string"]["query"] = "USP.$source.found:false";        
+        $params["body"] = $query; 
+        $cursorNotFound = $client->search($params);
+        $result["notFoundInSource"] = $cursorNotFound["hits"]["total"]["value"];
+
+        return $result;
+    }
+}
+
+/**
+ * APIs
+ *
+ * @category Class
+ * @package  APIs
+ * @author   Tiago Rodrigo Marçal Murakami <tiago.murakami@dt.sibi.usp.br>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://github.com/sibiusp/nav_elastic
+ */
+class API
+{
+    public static function dimensionsAPI($doi)
+    {
+        // Get cURL resource
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'https://metrics-api.dimensions.ai/doi/'.$doi.'',
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A'
+        )
+        );
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        $data = json_decode($resp, true);
+        return $data;
+        // Close request to clear up some resources
+        curl_close($curl);
+    }
+}
 
 
 ?>
