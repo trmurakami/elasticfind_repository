@@ -21,7 +21,11 @@
                             </ul>
                         </div>
                     </li>
-                    <li><a href="">Login</a></li>
+                    <?php if (empty($_SESSION['oauthuserdata'])) : ?>
+                        <li><a href="<?php echo "$url_base/"?>/aut/oauth.php">Login</a></li>
+                    <?php else: ?>
+                        <li>Logado</li>
+                    <?php endif; ?>
                 </ul>
                 <a class="uk-navbar-toggle uk-navbar-item uk-hidden@s" data-uk-toggle data-uk-navbar-toggle-icon href="#offcanvas-nav"></a>
             </div>
