@@ -25,7 +25,7 @@
         }
 
         if (isset($_GET["term"])) {
-            $body["query"]["bool"]["must"]["query_string"]["query"] = '$field:'.$_GET["term"].'';
+            $body["query"]["bool"]["must"]["query_string"]["query"] = 'author.person.affiliation.name_not_found:'.$_GET["term"].'';
         }
 
         $params = [];
