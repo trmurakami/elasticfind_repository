@@ -84,7 +84,7 @@
 
         <p><a href="autoridades.php">Atualizar autoridades</a></p>
 
-        <p><a href="translate_en.php">Atualizar tradução para o Inglês</a></p>
+        <p><a href="translate_en.php">Atualizar tradução para o Inglês - Converte o arquivo messages.po para o en.php</a></p>
 
 
 

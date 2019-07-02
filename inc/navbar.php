@@ -22,7 +22,7 @@
                         </div>
                     </li>
                     <?php if (empty($_SESSION['oauthuserdata'])) : ?>
-                        <li><a href="<?php echo "$url_base/"?>/aut/oauth.php">Login</a></li>
+                        <li><a href="<?php echo "$url_base/"?>aut/oauth.php">Login</a></li>
                     <?php else: ?>
                         <li>Logado</li>
                     <?php endif; ?>
