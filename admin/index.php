@@ -21,7 +21,10 @@
 
             $resultCrossref = AdminStats::source("crossref");
             $resultDimensions = AdminStats::source("dimensions");  
-            $resultUnpaywall = AdminStats::source("unpaywall");          
+            $resultUnpaywall = AdminStats::source("unpaywall");       
+            
+            
+            $resultAff = AdminStats::field("author.person.affiliation.tematres");
 
         ?>
         <title><?php echo $branch_abrev ?> - <?php echo $t->gettext('Administração'); ?></title>
@@ -55,7 +58,7 @@
                 <tr>
                     <td class="uk-text-bold"><a href="https://github.com/CrossRef/rest-api-doc">Crossref</a></td>
                     <td><?php echo $resultCrossref["foundInSource"]; ?></td>
-                    <td><?php echo $resultCrossref["notFoundInSource"]; ?></td></td>
+                    <td><?php echo $resultCrossref["notFoundInSource"]; ?></td>
                     <td><?php echo $resultCrossref["totalCollectedInSource"]; ?></td>
                     <td><?php echo number_format(($resultCrossref["totalCollectedInSource"] * 100) / $totalWithDOI, 2, '.', ''); ?>%</td>
                     <td><a href="../tools/collect_crossref.php">Script</a></td>
@@ -80,9 +83,34 @@
         </table>
 
         <hr class="uk-grid-divider">
-        <h4>Ferramentas</h4>
+        <h4>Correções de metadados</h4>
 
-        <p><a href="autoridades.php">Atualizar autoridades</a></p>
+        <table class="uk-table">
+            <caption><?php echo $t->gettext('Correções de metadados'); ?></caption>
+            <thead>
+                <tr>
+                    <th><?php echo $t->gettext('Fonte'); ?></th>
+                    <th><?php echo $t->gettext('Corrigidos'); ?></th>
+                    <th><?php echo $t->gettext('Não corrigidos'); ?></th>
+                    <th><?php echo $t->gettext('Total de ocorrências'); ?></th>
+                    <th><?php echo $t->gettext('Percentual corrigido'); ?></th>
+                    <th><?php echo $t->gettext('Script'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="uk-text-bold"><a href="">Instituições externas</a></td>
+                    <td><?php echo $resultAff["correct"]; ?></td>
+                    <td><?php echo $resultAff["notCorrect"]; ?></td>
+                    <td><?php echo $resultAff["totalOccorrences"]; ?></td>
+                    <td><?php echo number_format(($resultAff["correct"] * 100) / $resultAff["totalOccorrences"], 2, '.', ''); ?>%</td>
+                    <td><a href='../tools/tematres.php?field="author.person.affiliation"'>Script</a></td>
+                </tr>            
+            </tbody>
+        </table>
+
+        <hr class="uk-grid-divider">
+        <h4>Ferramentas</h4>
 
         <p><a href="translate_en.php">Atualizar tradução para o Inglês - Converte o arquivo messages.po para o en.php</a></p>
 

@@ -601,6 +601,40 @@ class AdminStats
 
         return $result;
     }
+
+    public static function field($field) 
+    {
+        global $client;
+        global $index;
+        $params = [];
+        $params["index"] = $index;
+        
+        $size = 50;
+
+        $query["aggs"]["counts"]["terms"]["field"] = "$field.keyword";
+        $query["aggs"]["counts"]["terms"]["missing"] = "Não preenchido";
+        $query["aggs"]["counts"]["terms"]["size"] = $size;
+
+        $response = Elasticsearch::search(null, 0, $query);
+        $result_count = count($response["aggregations"]["counts"]["buckets"]);     
+
+        foreach ($response["aggregations"]["counts"]["buckets"] as $facets) {
+            if ($facets["key"] == "false") {
+                $result["notCorrect"] = $facets["doc_count"];
+            } elseif ($facets["key"] == "true") {
+                $result["correct"] = $facets["doc_count"];
+            } else {
+                $result["notFound"] = $facets["doc_count"];
+            }
+        }
+        
+        if (empty($result["correct"])) {
+            $result["correct"] = 0;
+        }
+        $result["totalOccorrences"] = ($result["correct"] + $result["notCorrect"]);
+
+        return $result;
+    }    
 }
 
 /**

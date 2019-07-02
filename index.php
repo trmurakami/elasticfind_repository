@@ -361,10 +361,10 @@
             <div class="uk-container uk-container-small">
                 <div class="uk-grid uk-child-width-1-4 uk-child-width-expand@m logos-grid" data-uk-grid data-uk-scrollspy="cls: uk-animation-scale-down; target: > div > img; delay: 100">
                     <div>
-                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="https://zzseba78.github.io/Kick-Off/img/logo-1.svg" data-uk-img alt="Image">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="inc/images/logosusp/ECA.jpg" data-uk-img alt="Image">
                     </div>
                     <div>
-                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="https://zzseba78.github.io/Kick-Off/img/logo-2.svg" data-uk-img alt="Image">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="inc/images/logosusp/IF.jpg" data-uk-img alt="Image">
                     </div>
                     <div>
                         <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="https://zzseba78.github.io/Kick-Off/img/logo-3.svg" data-uk-img alt="Image">
