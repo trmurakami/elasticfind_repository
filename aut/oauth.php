@@ -8,93 +8,92 @@ ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
 error_reporting(-1);
 
-if( !empty( filter_input(INPUT_GET,'erro') ) ){
-?>
- <HTML>
- <BODY>
- erro: <?php
-         echo filter_input(INPUT_GET,'erro');
-       ?> <br>
- <a href='oauth.php'>tentar novamente</a> <br>
- </BODY>
- </HTML>
-<?php
- exit;
+require ''.__DIR__.'/../inc/config.php'; 
+
+if (!empty(filter_input(INPUT_GET, 'erro'))) {
+    ?>
+    <HTML>
+        <BODY>
+            Erro: <?php echo filter_input(INPUT_GET, 'erro'); ?> <br>
+            <a href="<?php echo $url_base; ?>/aut/oauth.php">tentar novamente</a> <br>
+        </BODY>
+    </HTML>
+    <?php
+    exit;
 }
 
-include(__DIR__.'/../inc/config.php'); 
-
-if ( !empty( filter_input(INPUT_GET,'reset') ) )
-{
- unset($_SESSION['token']);
+if (!empty(filter_input(INPUT_GET, 'reset'))) {
+    unset($_SESSION['token']);
 }
 
-if(!isset($_SESSION['state']))
-{
-  $_SESSION['state'] = 0 ;
+if (!isset($_SESSION['state'])) {
+    $_SESSION['state'] = 0;
 }
 
-if( $_SESSION['state']==1 && empty(filter_input(INPUT_GET,'oauth_token')) )
-{
-  $_SESSION['state'] = 0;
+if ($_SESSION['state']==1 && empty(filter_input(INPUT_GET, 'oauth_token'))) {
+    $_SESSION['state'] = 0;
 }
 
 try {
 
-  $oauth = new OAuth($conskey,$conssec,OAUTH_SIG_METHOD_HMACSHA1,OAUTH_AUTH_TYPE_URI);
-  $oauth->enableDebug();
+    $oauth = new OAuth($conskey, $conssec, OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_URI);
+    $oauth->enableDebug();
 
-  if(empty(filter_input(INPUT_GET,'oauth_token')) && empty($_SESSION['state'])) {
+    echo "Sessão antes<br/>";
+    print_r($_SESSION);
+    echo "<br/>";
 
-    $request_token_info = $oauth->getRequestToken($req_url,'6','POST');
-    $_SESSION['secret'] = $request_token_info['oauth_token_secret'];
-    $_SESSION['state'] = 1;
+    echo "Oauth<br/>";
+    print_r($oauth);
+    echo "<br/>";
 
-    $targeturl = $authurl.'?oauth_token='.$request_token_info['oauth_token'].'&callback_id='.$callback_id;
+    if (empty(filter_input(INPUT_GET, 'oauth_token')) && empty($_SESSION['state'])) {
 
-    header('Location: '.$targeturl);
-    
-    exit;
+        $request_token_info = $oauth->getRequestToken($req_url, '6', 'POST');
+        $_SESSION['secret'] = $request_token_info['oauth_token_secret'];
+        $_SESSION['state'] = 1;
 
-  }
-  elseif($_SESSION['state']==1) {
+        $targeturl = $authurl.'?oauth_token='.$request_token_info['oauth_token'].'&callback_id='.$callback_id;
 
-    $oauth->setToken(filter_input(INPUT_GET,'oauth_token'),$_SESSION['secret']);
-    $access_token_info = $oauth->getAccessToken($acc_url, NULL, NULL, 'POST');
+        header('Location: '.$targeturl);
 
-    $_SESSION['state'] = 2;
-    $_SESSION['token'] = $access_token_info['oauth_token'];
-    $_SESSION['secret'] = $access_token_info['oauth_token_secret'];
+        exit;
 
-    $oauth->setToken($_SESSION['token'],$_SESSION['secret']);
-    $oauth->fetch($api_url, NULL, 'POST');
-    
-    $_SESSION['oauthuserdata'] = json_decode($oauth->getLastResponse());
-    
-    if( empty( $_SESSION['oauthuserdata']->loginUsuario ) )
-    {
-	$_SESSION['state'] = 0;
-	header('Location: /aut/oauth.php?erro=usuario%20inválido');
-       
-        // echo '<pre>';
-	// print_r($oauth_result);
-	// echo '</pre><br><br><pre>';
-	// print_r($alfretdata);
-	// echo '</pre>';
+    } elseif ($_SESSION['state']==1) {
 
+        $oauth->setToken(filter_input(INPUT_GET, 'oauth_token'), $_SESSION['secret']);
+        $access_token_info = $oauth->getAccessToken($acc_url, null, null, 'POST');
+
+        $_SESSION['state'] = 2;
+        $_SESSION['token'] = $access_token_info['oauth_token'];
+        $_SESSION['secret'] = $access_token_info['oauth_token_secret'];
+
+        $oauth->setToken($_SESSION['token'], $_SESSION['secret']);
+        $oauth->fetch($api_url, null, 'POST');
+        
+        $_SESSION['oauthuserdata'] = json_decode($oauth->getLastResponse());
+        
+        if (empty($_SESSION['oauthuserdata']->loginUsuario)) {
+            $_SESSION['state'] = 0;
+            header('Location: '.$url_base.'/aut/oauth.php?erro=usuario%20inválido');
+        
+            // echo '<pre>';
+            // print_r($oauth_result);
+            // echo '</pre><br><br><pre>';
+            // print_r($alfretdata);
+            // echo '</pre>';
+
+        } else {
+            header('Location: ../');
+        }  
+    } else { 
+        $_SESSION['state'] = 0;
+        print_r($_SESSION);
+        //header('Location: '.$url_base.'/aut/oauth.php?erro=erro%20de%20login');
     }
-    else {
-	header('Location: ../');
-    }
-  
-  }
-  else { 
-    $_SESSION['state'] = 0;
-    header('Location: /aut/oauth.php?erro=erro%20de%20login');
-  }
     
 } catch(OAuthException $E) {
 
-  print_r($E);
+    print_r($E);
 
 }

@@ -61,7 +61,7 @@
                     <td><?php echo $resultCrossref["notFoundInSource"]; ?></td>
                     <td><?php echo $resultCrossref["totalCollectedInSource"]; ?></td>
                     <td><?php echo number_format(($resultCrossref["totalCollectedInSource"] * 100) / $totalWithDOI, 2, '.', ''); ?>%</td>
-                    <td><a href="../tools/collect_crossref.php">Script</a></td>
+                    <td><a target="_blank" rel="noopener noreferrer" href="../tools/collect_crossref.php">Script</a></td>
                 </tr>
                 <tr>
                     <td class="uk-text-bold"><a href="https://dimensions.figshare.com/articles/Dimensions_Metrics_API_Documentation/5783694">Dimensions</a></td>
@@ -69,7 +69,7 @@
                     <td><?php echo $resultDimensions["notFoundInSource"]; ?></td>
                     <td><?php echo $resultDimensions["totalCollectedInSource"]; ?></td>
                     <td><?php echo number_format(($resultDimensions["totalCollectedInSource"] * 100) / $totalWithDOI, 2, '.', ''); ?>%</td>
-                    <td><a href="../tools/collect_dimensions.php">Script</a></td>
+                    <td><a target="_blank" rel="noopener noreferrer" href="../tools/collect_dimensions.php">Script</a></td>
                 </tr>
                 <tr>
                     <td class="uk-text-bold"><a href="https://unpaywall.org/products/api">Unpaywall</a></td>
@@ -77,7 +77,7 @@
                     <td><?php echo $resultUnpaywall["notFoundInSource"]; ?></td>
                     <td><?php echo $resultUnpaywall["totalCollectedInSource"]; ?></td>
                     <td><?php echo number_format(($resultUnpaywall["totalCollectedInSource"] * 100) / $totalWithDOI, 2, '.', ''); ?>%</td>
-                    <td><a href="../tools/collect_unpaywall.php">Script</a></td>
+                    <td><a target="_blank" rel="noopener noreferrer" href="../tools/collect_unpaywall.php">Script</a></td>
                 </tr>                
             </tbody>
         </table>
@@ -104,11 +104,28 @@
                     <td><?php echo $resultAff["notCorrect"]; ?></td>
                     <td><?php echo $resultAff["totalOccorrences"]; ?></td>
                     <td><?php echo number_format(($resultAff["correct"] * 100) / $resultAff["totalOccorrences"], 2, '.', ''); ?>%</td>
-                    <td><a href='../tools/tematres.php?field="author.person.affiliation"'>Script</a></td>
+                    <td><a target="_blank" rel="noopener noreferrer" href='../tools/tematres.php?field=author.person.affiliation'>Script</a></td>
                 </tr>            
             </tbody>
         </table>
 
+        <hr class="uk-grid-divider">
+        <h4>DSpace</h4>
+            <?php
+            if (strpos($_SESSION["DSpaceCookies"], 'JSESSIONID') !== false) {
+                echo '
+                <div class="uk-alert-success" uk-alert>
+                    <p>Integração com o DSpace está funcionando.</p>
+                </div>            
+                ';
+            } else {
+                echo '
+                <div class="uk-alert-danger" uk-alert>
+                    <p>Integração com o DSpace NÃO está funcionando.</p>
+                </div>            
+                ';
+            }
+            ?>
         <hr class="uk-grid-divider">
         <h4>Ferramentas</h4>
 

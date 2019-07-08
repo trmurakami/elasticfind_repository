@@ -118,6 +118,9 @@ class Record
         } else {
             $this->issnArray[] = "Não informado";
         }
+        if (isset($record["_source"]["USP"]["fullTextFiles"])) {
+            $this->bitstreamArray = $record["_source"]["USP"]["fullTextFiles"];
+        }       
         $this->completeRecord = $record;
         $this->showMetrics = $showMetrics;
     }
@@ -204,7 +207,7 @@ class Record
 
     }
 
-    public function completeRecordMetadata($t,$url_base)
+    public function completeRecordMetadata($t, $url_base, $createFormDSpace = null)
     {
         echo '<article class="uk-article">';
         echo '<p class="uk-article-meta">';
@@ -233,9 +236,36 @@ class Record
 
         echo '<div class="uk-grid" data-ukgrid>';
         echo '<div class="uk-width-1-3@m">';
+
+        if (!empty($this->bitstreamArray)) { 
+            echo '<div class="uk-alert-primary" uk-alert>
+            <h4>'.$t->gettext('Download na BDPI').'</h4>
+            <ul class="uk-list uk-list-divider">
+            ';
+
+            foreach ($this->bitstreamArray as $key => $value) {
+                echo '
+                    <li>
+                    <a href="https://'.$_SERVER["SERVER_NAME"].'/bitstreams/'.$value["uuid"].'" target="_blank" rel="noopener noreferrer nofollow">
+                        <img data-src="'.$url_base.'/inc/images/pdf.png" width="70" height="70" alt="Download" uk-img>
+                        <p>Arquivo em Acesso Aberto</p>
+                        <img width="48" alt="Open Access logo PLoS white" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Open_Access_logo_PLoS_white.svg/64px-Open_Access_logo_PLoS_white.svg.png">
+                    </a>
+                    <a href="http://'.$_SERVER["SERVER_NAME"].'/directbitstream/'.$value["uuid"].'/'.$value["name"].'" target="_blank" rel="noopener noreferrer nofollow">Direct link</a>
+                    </li>';
+            }
+
+            echo '</ul></div>';
+        }
+
+        
+        if (!empty($createFormDSpace)) {
+            $this->itemsDSpace($createFormDSpace, $t);
+        }
+
         if (!empty($this->url)||!empty($this->doi)) {
             $this->onlineAccess($t);
-        }      
+        }          
 
         echo '</div>';
         echo '<div class="uk-width-2-3@m">';
@@ -488,6 +518,12 @@ class Record
 
     }
 
+    public function itemsDSpace($createFormDSpace, $t)
+    {
+        echo $createFormDSpace["alert"];
+        echo $createFormDSpace["form"];
+    }    
+
     public function holdings($id)
     {
         if ($dedalus == true) {
@@ -631,6 +667,9 @@ class AdminStats
         if (empty($result["correct"])) {
             $result["correct"] = 0;
         }
+        if (empty($result["notCorrect"])) {
+            $result["notCorrect"] = 0;
+        }        
         $result["totalOccorrences"] = ($result["correct"] + $result["notCorrect"]);
 
         return $result;
