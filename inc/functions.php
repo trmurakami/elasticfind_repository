@@ -240,22 +240,24 @@ class Record
         if (!empty($this->bitstreamArray)) { 
             echo '<div class="uk-alert-primary" uk-alert>
             <h4>'.$t->gettext('Download na BDPI').'</h4>
-            <ul class="uk-list uk-list-divider">
+            <ul class="uk-list uk-list-striped">
             ';
 
+            
+
             foreach ($this->bitstreamArray as $key => $value) {
-                echo '
-                    <li>
-                    <a href="https://'.$_SERVER["SERVER_NAME"].'/bitstreams/'.$value["uuid"].'" target="_blank" rel="noopener noreferrer nofollow">
-                        <img data-src="'.$url_base.'/inc/images/pdf.png" width="70" height="70" alt="Download" uk-img>
-                        <p>Arquivo em Acesso Aberto</p>
-                        <img width="48" alt="Open Access logo PLoS white" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Open_Access_logo_PLoS_white.svg/64px-Open_Access_logo_PLoS_white.svg.png">
-                    </a>
-                    <a href="http://'.$_SERVER["SERVER_NAME"].'/directbitstream/'.$value["uuid"].'/'.$value["name"].'" target="_blank" rel="noopener noreferrer nofollow">Direct link</a>
-                    </li>';
+                echo ' 
+                <li>
+                <a class="uk-link-toggle" href="https://'.$_SERVER["SERVER_NAME"].'/bitstreams/'.$value["uuid"].'" target="_blank" rel="noopener noreferrer nofollow">
+                <div uk-grid>
+                    <div class="uk-width-auto"><img data-src="'.$url_base.'/inc/images/pdf.png" width="50" height="50" alt="PDF" uk-img></div>
+                    <div class="uk-width-expand"><b>Nome:</b> '.$value["name"].'<br/><b>Tamanho:</b> '.$value["sizeBytes"].'</div>
+                </div>
+                </a>
+                </li>';
             }
 
-            echo '</ul></div>';
+            echo '</dl></div>';
         }
 
         
@@ -705,6 +707,15 @@ class API
         // Close request to clear up some resources
         curl_close($curl);
     }
+
+    public static function sherpaAPI($issn, $sherpaAPIKEY)
+    {
+        $page = file_get_contents('http://www.sherpa.ac.uk/romeo/api29.php?issn='.$issn.'&ak='.$sherpaAPIKEY.'');
+        $xml = simplexml_load_string($page);
+        $json = json_encode($xml);
+        $array = json_decode($json, true); 
+        return $array;
+    }    
 }
 
 

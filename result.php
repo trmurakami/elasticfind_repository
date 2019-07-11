@@ -21,14 +21,15 @@ $result_get = Requests::getParser($_GET);
 $limit = $result_get['limit'];
 $page = $result_get['page'];
 
-// if (isset($_GET["sort"])) {
-//     $result_get['query']["sort"][$_GET["sort"]]["unmapped_type"] = "long";
-//     $result_get['query']["sort"][$_GET["sort"]]["missing"] = "_last";
-//     $result_get['query']["sort"][$_GET["sort"]]["order"] = "desc";
-//     $result_get['query']["sort"][$_GET["sort"]]["mode"] = "max";
-// } else {
-//     $result_get['query']['sort']['datePublished.keyword']['order'] = "desc";
-// }
+if (isset($_GET["sort"])) {
+    $result_get['query']["sort"][$_GET["sort"]]["unmapped_type"] = "long";
+    $result_get['query']["sort"][$_GET["sort"]]["missing"] = "_last";
+    $result_get['query']["sort"][$_GET["sort"]]["order"] = "desc";
+    $result_get['query']["sort"][$_GET["sort"]]["mode"] = "max";
+} else {
+    $result_get['query']['sort']['datePublished.keyword']['order'] = "desc";
+    $result_get['query']['sort']['name.keyword']['order'] = "asc";
+}
 
 $params = [];
 $params["index"] = $index;
