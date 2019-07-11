@@ -211,6 +211,9 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
                             <th>Nome do arquivo</th>
                             <th>Tipo de acesso</th>
                             <th>Link</th>
+                            <th>Excluir</th>
+                            <th>Privado/Público</th>
+                            <th>Embargado até</th>
                         </tr>
                     </thead>
                     <tbody>';
@@ -249,16 +252,32 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
                                         <div class="uk-modal-dialog uk-modal-body">
                                             <h2 class="uk-modal-title">Tornar privado</h2>
                                             <p>Tem certeza que quer tornar privado o arquivo '.$value["name"].'?</p>
-                                            <p class="uk-text-right">
-                                                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancelar</button>
-                                                <form action="' . $actual_link . '" method="post">
+                                            <p class="uk-text-right">                                                
+                                                <form action="' . $actual_link . '" method="post" class="uk-form-horizontal uk-margin-large">
+                                                    <div class="uk-alert-danger" uk-alert>
+                                                        <a class="uk-alert-close" uk-close></a>
+                                                        <p>Caso o trabalho tenha embargo, favor informar a data de fim do embargo, senão deixe em branco</p>
+                                                        <div class="uk-margin">
+                                                            <label class="uk-form-label" for="form-horizontal-text">Ano</label>
+                                                            <div class="uk-form-controls">
+                                                                <input class="uk-input" type="text" name="embargoYear" placeholder="Exemplo: 2020">
+                                                            </div>
+                                                        </div>
+                                                        <div class="uk-margin">
+                                                            <label class="uk-form-label" for="form-horizontal-text">Mês (Por exemplo, caso o seja preenchido 04, estará disponível no início de abril)</label>
+                                                            <div class="uk-form-controls">
+                                                                <input class="uk-input" type="text" name="embargoMonth" placeholder="Exemplo: 07">
+                                                            </div>
+                                                        </div>                                                                                                                     
+                                                    </div>
                                                     <input type="hidden" name="makePrivateBitstream" value="'.$value["uuid"].'" />
                                                     <input type="hidden" name="policyID" value="'.$bitstreamPolicyUnit["id"].'" />
                                                     <input type="hidden" name="policyAction" value="'.$bitstreamPolicyUnit["action"].'" />
                                                     <input type="hidden" name="policyGroupId" value="'.$bitstreamPolicyUnit["groupId"].'" />
                                                     <input type="hidden" name="policyResourceType" value="'.$bitstreamPolicyUnit["resourceType"].'" />
-                                                    <input type="hidden" name="policyRpType" value="'.$bitstreamPolicyUnit["rpType"].'" />
+                                                    <input type="hidden" name="policyRpType" value="'.$bitstreamPolicyUnit["rpType"].'" />                                                    
                                                     <button class="uk-button uk-button-secondary" name="btn_submit">Tornar privado</button>
+                                                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancelar</button>
                                                 </form>
                                             </p>
                                         </div>
