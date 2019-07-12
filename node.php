@@ -60,10 +60,21 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
                 /* Manage policies of bitstream */
 
                 if (isset($_POST['makePrivateBitstream'])) {
-                    /* Delete Annonymous Policy */
-                    $resultDeleteBitstreamPolicyDSpace = DSpaceREST::deleteBitstreamPolicyDSpace($_POST['makePrivateBitstream'], $_POST['policyID'], $_SESSION["DSpaceCookies"]);
-                    /* Add Restricted Policy */
-                    $resultAddBitstreamPolicyDSpace = DSpaceREST::addBitstreamPolicyDSpace($_POST['makePrivateBitstream'], $_POST['policyAction'], $dspaceRestrictedID, $_POST['policyResourceType'], $_POST['policyRpType'], $_SESSION["DSpaceCookies"]);
+                    if (isset($_POST['embargoYear'])) {
+                        $embargoStart = date("Y-m-d");
+                        $embargoEnd = ''.$_POST['embargoYear'].'-'.$_POST['embargoMonth'].'-01';
+                        /* Delete Annonymous Policy */
+                        $resultDeleteBitstreamPolicyDSpace = DSpaceREST::deleteBitstreamPolicyDSpace($_POST['makePrivateBitstream'], $_POST['policyID'], $_SESSION["DSpaceCookies"]);
+                        /* Add Restricted Policy */
+                        $resultAddBitstreamPolicyDSpace = DSpaceREST::addBitstreamPolicyDSpace($_POST['makePrivateBitstream'], $_POST['policyAction'], $dspaceRestrictedID, $_POST['policyResourceType'], $_POST['policyRpType'], $_SESSION["DSpaceCookies"], $embargoStart, $embargoEnd);
+                        /* Add Public Policy for Annonymous after Embargo end Date */
+                        $resultAddBitstreamPolicyDSpace = DSpaceREST::addBitstreamPolicyDSpace($_POST['makePrivateBitstream'], $_POST['policyAction'], $dspaceAnnonymousID, $_POST['policyResourceType'], $_POST['policyRpType'], $_SESSION["DSpaceCookies"], $embargoEnd, "");                                                
+                    } else {
+                        /* Delete Annonymous Policy */
+                        $resultDeleteBitstreamPolicyDSpace = DSpaceREST::deleteBitstreamPolicyDSpace($_POST['makePrivateBitstream'], $_POST['policyID'], $_SESSION["DSpaceCookies"]);
+                        /* Add Restricted Policy */
+                        $resultAddBitstreamPolicyDSpace = DSpaceREST::addBitstreamPolicyDSpace($_POST['makePrivateBitstream'], $_POST['policyAction'], $dspaceRestrictedID, $_POST['policyResourceType'], $_POST['policyRpType'], $_SESSION["DSpaceCookies"]);
+                    }
                 }
                 if (isset($_POST['makePublicBitstream'])) {
                     /* Delete Annonymous Policy */
@@ -202,7 +213,7 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
                 if (!empty($bitstreamsDSpace)) {
                     
                     echo '<div class="uk-alert-primary" uk-alert>
-                    <h4>Gerenciamento do texto completo</h4>
+                    <h4>Gerenciamento de políticas para o texto completo</h4>
 
                     <table class="uk-table uk-table-justify uk-table-divider">
                     <thead>
@@ -256,17 +267,45 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
                                                 <form action="' . $actual_link . '" method="post" class="uk-form-horizontal uk-margin-large">
                                                     <div class="uk-alert-danger" uk-alert>
                                                         <a class="uk-alert-close" uk-close></a>
-                                                        <p>Caso o trabalho tenha embargo, favor informar a data de fim do embargo, senão deixe em branco</p>
+                                                        <p>Caso o trabalho tenha embargo, favor informar a data de fim do embargo, senão, deixe em branco</p>
                                                         <div class="uk-margin">
                                                             <label class="uk-form-label" for="form-horizontal-text">Ano</label>
                                                             <div class="uk-form-controls">
-                                                                <input class="uk-input" type="text" name="embargoYear" placeholder="Exemplo: 2020">
+                                                                <select class="uk-select" name="embargoYear">
+                                                                    <option disabled selected value>Selecione o ano</option>
+                                                                    <option value="2019">2019</option>
+                                                                    <option value="2020">2020</option>
+                                                                    <option value="2021">2021</option>
+                                                                    <option value="2022">2022</option>
+                                                                    <option value="2023">2023</option>
+                                                                    <option value="2024">2024</option>
+                                                                    <option value="2025">2025</option>
+                                                                    <option value="2026">2026</option>
+                                                                    <option value="2027">2027</option>
+                                                                    <option value="2028">2028</option>
+                                                                    <option value="2029">2029</option>
+                                                                    <option value="2030">2030</option>
+                                                                </select> 
                                                             </div>
                                                         </div>
                                                         <div class="uk-margin">
-                                                            <label class="uk-form-label" for="form-horizontal-text">Mês (Por exemplo, caso o seja preenchido 04, estará disponível no início de abril)</label>
+                                                            <label class="uk-form-label" for="form-horizontal-text">Mês (O trabalho estará disponível no ínicio do mês selecionado)</label>
                                                             <div class="uk-form-controls">
-                                                                <input class="uk-input" type="text" name="embargoMonth" placeholder="Exemplo: 07">
+                                                                <select class="uk-select" name="embargoMonth">
+                                                                    <option disabled selected value>Selecione a mês</option>
+                                                                    <option value="01">Janeiro</option>
+                                                                    <option value="02">Fevereiro</option>
+                                                                    <option value="03">Março</option>
+                                                                    <option value="04">Abril</option>
+                                                                    <option value="05">Maio</option>
+                                                                    <option value="06">Junho</option>
+                                                                    <option value="07">Julho</option>
+                                                                    <option value="08">Agosto</option>
+                                                                    <option value="09">Setembro</option>
+                                                                    <option value="10">Outubro</option>
+                                                                    <option value="11">Novembro</option>
+                                                                    <option value="12">Dezembro</option>
+                                                                </select>
                                                             </div>
                                                         </div>                                                                                                                     
                                                     </div>
