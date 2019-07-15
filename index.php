@@ -31,7 +31,7 @@
                 </div>
             </div>
             <!-- /TOP CONTAINER -->
-            <!-- TOP IMAGE -->
+            <!-- TOP IMAGE 
             <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" 
             data-srcset="https://bdpi.usp.br/inc/images/cover/Cientificamente_Oficina-CSI_020-16_foto-Cec%C3%ADlia-Bastos-37.jpg 640w,
             https://bdpi.usp.br/inc/images/cover/Cientificamente_Oficina-CSI_020-16_foto-Cec%C3%ADlia-Bastos-37.jpg 960w,
@@ -41,7 +41,20 @@
             data-src="https://bdpi.usp.br/inc/images/cover/Cientificamente_Oficina-CSI_020-16_foto-Cec%C3%ADlia-Bastos-37.jpg" 
             alt="" data-uk-cover data-uk-img data-uk-parallax="opacity: 1,0.1; easing:0"
             >
+            /TOP IMAGE -->
+
+            <!-- TOP IMAGE -->
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" 
+            data-srcset="https://bdpi.usp.br/inc/images/cover/IMG_2239.jpg 640w,
+            https://bdpi.usp.br/inc/images/cover/IMG_2239.jpg 960w,
+            https://bdpi.usp.br/inc/images/cover/IMG_2239.jpg 1200w,
+            https://bdpi.usp.br/inc/images/cover/IMG_2239.jpg 2000w"
+            data-sizes="100vw"
+            data-src="https://bdpi.usp.br/inc/images/cover/IMG_2239.jpg" 
+            alt="" data-uk-cover data-uk-img data-uk-parallax="opacity: 1,0.1; easing:0"
+            >
             <!-- /TOP IMAGE -->
+
             </div>
             <div class="uk-position-bottom-center uk-position-medium uk-position-z-index uk-text-center">
                 <a href="#search" data-uk-scroll="duration: 500" data-uk-icon="icon: arrow-down; ratio: 2"></a>
