@@ -675,6 +675,19 @@ class AdminStats
         $result["totalOccorrences"] = ($result["correct"] + $result["notCorrect"]);
 
         return $result;
+    }
+    
+    public static function fullTextFiles() 
+    {
+        global $client;
+        global $index;
+        $params = [];
+        $params["index"] = $index;
+        $params["size"] = 0;
+        $query["query"]["query_string"]["query"] = "+_exists_:USP.fullTextFiles";       
+        $params["body"] = $query; 
+        $cursor = $client->search($params);
+        return $cursor;
     }    
 }
 

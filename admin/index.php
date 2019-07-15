@@ -9,6 +9,15 @@
             require 'inc/meta-header.php';
 
             /* Get number of records with doi */
+            $query["query"]["query_string"]["query"] = "*";
+            $paramsTotal = [];
+            $paramsTotal["index"] = $index;
+            $paramsTotal["size"] = 0;
+            $paramsTotal["body"] = $query; 
+            $cursorTotal = $client->search($paramsTotal);
+            $totalRecords = $cursorTotal["hits"]["total"]["value"];            
+
+            /* Get number of records with doi */
             $query["query"]["query_string"]["query"] = "+_exists_:doi";
             $params = [];
             $params["index"] = $index;
@@ -39,6 +48,7 @@
         <h4><?php echo $t->gettext('Estatísticas de coleta de fontes externas'); ?></h4>
 
         <div class="uk-alert-warning" uk-alert>
+            <p><?php echo $t->gettext('Total de registros'); ?>: <b><?php echo $totalRecords; ?></b></p>
             <p><?php echo $t->gettext('Total de registros com DOI'); ?>: <b><?php echo $totalWithDOI; ?></b></p>
         </div>
 
@@ -125,7 +135,30 @@
                 </div>            
                 ';
             }
+            $resultFullTextFilesQuery = AdminStats::fullTextFiles();
+
             ?>
+
+            <table class="uk-table">
+                <caption><?php echo $t->gettext('Registros com Texto completo'); ?></caption>
+                <thead>
+                    <tr>
+                        <th><?php echo $t->gettext('Total de registros'); ?></th>
+                        <th><?php echo $t->gettext('Com texto completo'); ?></th>
+                        <th><?php echo $t->gettext('Percentual'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a target="_blank" rel="noopener noreferrer" href="<?php echo "$url_base/"?>result.php?search[]=(-_exists_:USP.fullTextFiles)"><?php echo $totalRecords; ?></a></td>
+                        <td><a target="_blank" rel="noopener noreferrer" href="<?php echo "$url_base/"?>result.php?search[]=(_exists_:USP.fullTextFiles)"><?php echo $resultFullTextFilesQuery["hits"]["total"]["value"]; ?></a></td>
+                        <td><?php echo number_format(($resultFullTextFilesQuery["hits"]["total"]["value"] * 100) / $totalRecords, 2, '.', ''); ?>%</td>
+                    </tr>            
+                </tbody>
+            </table>   
+
+
+
         <hr class="uk-grid-divider">
         <h4>Ferramentas</h4>
 
