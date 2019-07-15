@@ -731,5 +731,78 @@ class API
     }    
 }
 
+/**
+ * Página Inicial
+ *
+ * @category Class
+ * @package  Homepage
+ * @author   Tiago Rodrigo Marçal Murakami <tiago.murakami@dt.sibi.usp.br>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://github.com/sibiusp/nav_elastic
+ */
+class Homepage
+{
+    /**
+     * Function last records
+     *
+     * @return array Last records
+     */
+    static function getLastRecords()
+    {
+
+        global $client;
+        global $index;
+        $params = [];
+        $params["index"] = $index;
+        $params["size"] = 0;
+        $query["query"]["bool"]["must"]["query_string"]["query"] = "*";
+        $query["sort"]["_uid"]["unmapped_type"] = "long";
+        $query["sort"]["_uid"]["missing"] = "_last";
+        $query["sort"]["_uid"]["order"] = "desc";
+        $query["sort"]["_uid"]["mode"] = "max";         
+        $params["body"] = $query; 
+        $response = Elasticsearch::search(null, 10, $query);
+
+        foreach ($response["hits"]["hits"] as $r) {
+            echo '<article class="uk-comment">
+            <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>';
+            if (!empty($r["_source"]['unidadeUSP'])) {
+                $file = 'inc/images/logosusp/'.$r["_source"]['unidadeUSP'][0].'.jpg';
+            } else {
+                $file = "";
+            }
+            if (file_exists($file)) {
+                echo '<div class="uk-width-auto"><img class="uk-comment-avatar" src="'.$file.'" width="60" height="60" alt=""></div>';
+            } else {
+
+            };
+            echo '<div class="uk-width-expand">';
+            if (!empty($r["_source"]['name'])) {
+                echo '<a href="item/'.$r['_id'].'"><h4 class="uk-comment-title uk-margin-remove">'.$r["_source"]['name'].'';
+                if (!empty($r["_source"]['datePublished'])) {
+                    echo ' ('.$r["_source"]['datePublished'].')';
+                }
+                echo '</h4></a>';
+            };
+            echo '<ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-small">';
+            if (!empty($r["_source"]['author'])) {
+                foreach ($r["_source"]['author'] as $autores) {
+                    if (!empty($autores["person"]["orcid"])) {
+                        $orcidLink = ' <a href="'.$autores["person"]["orcid"].'"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png"></a>';
+                    } else {
+                        $orcidLink = '';
+                    }
+                    echo '<li><a href="result.php?filter[]=author.person.name:&quot;'.$autores["person"]["name"].'&quot;">'.$autores["person"]["name"].'</a>'.$orcidLink.'</li>';
+                    unset($orcidLink);
+                }
+                echo '</ul></div>';
+            };
+            echo '</header>';
+            echo '</article>';
+        }
+
+    }      
+}
+
 
 ?>
