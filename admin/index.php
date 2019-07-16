@@ -12,19 +12,17 @@
             $query["query"]["query_string"]["query"] = "*";
             $paramsTotal = [];
             $paramsTotal["index"] = $index;
-            $paramsTotal["size"] = 0;
             $paramsTotal["body"] = $query; 
-            $cursorTotal = $client->search($paramsTotal);
-            $totalRecords = $cursorTotal["hits"]["total"]["value"];            
+            $cursorTotal = $client->count($paramsTotal);
+            $totalRecords = $cursorTotal["count"];            
 
             /* Get number of records with doi */
             $query["query"]["query_string"]["query"] = "+_exists_:doi";
             $params = [];
             $params["index"] = $index;
-            $params["size"] = 0;
             $params["body"] = $query; 
-            $cursor = $client->search($params);
-            $totalWithDOI = $cursor["hits"]["total"]["value"];
+            $cursor = $client->count($params);
+            $totalWithDOI = $cursor["count"];
 
             /* Get Stats */
 

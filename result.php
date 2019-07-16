@@ -21,6 +21,12 @@ $result_get = Requests::getParser($_GET);
 $limit = $result_get['limit'];
 $page = $result_get['page'];
 
+$params = [];
+$params["index"] = $index;
+$params["body"] = $result_get['query'];
+$cursorTotal = $client->count($params);
+$total = $cursorTotal["count"];
+
 if (isset($_GET["sort"])) {
     $result_get['query']["sort"][$_GET["sort"]]["unmapped_type"] = "long";
     $result_get['query']["sort"][$_GET["sort"]]["missing"] = "_last";
@@ -31,14 +37,12 @@ if (isset($_GET["sort"])) {
     $result_get['query']['sort']['name.keyword']['order'] = "asc";
 }
 
-$params = [];
-$params["index"] = $index;
+
 $params["size"] = $limit;
 $params["from"] = $result_get['skip'];
-$params["body"] = $result_get['query'];
-
 $cursor = $client->search($params);
-$total = $cursor["hits"]["total"]["value"];
+
+
 ?>
 
 <!DOCTYPE html>

@@ -21,13 +21,18 @@
 
         $params = [];
         $params["index"] = $index;
-        $params["_source"] = ["_id","author"];
-        $params["size"] = 1000;
         $params["body"] = $body;
+
+        $responseCount = $client->count($params);
+
+
+        $params["_source"] = ["_id","author"];
+        $params["size"] = 2000;
+        $params["from"] = 0;       
 
         $response = $client->search($params);
 
-        echo 'Total de registros faltantes: '.$response["hits"]["total"]["value"].'';
+        echo 'Total de registros faltantes: '.$responseCount["count"].'';
 
 
 
