@@ -32,6 +32,7 @@
             
             
             $resultAff = AdminStats::field("author.person.affiliation.tematres");
+            $resultFunder = AdminStats::field("funder.tematres");
 
         ?>
         <title><?php echo $branch_abrev ?> - <?php echo $t->gettext('Administração'); ?></title>
@@ -113,7 +114,15 @@
                     <td><?php echo $resultAff["totalOccorrences"]; ?></td>
                     <td><?php echo number_format(($resultAff["correct"] * 100) / $resultAff["totalOccorrences"], 2, '.', ''); ?>%</td>
                     <td><a target="_blank" rel="noopener noreferrer" href='../tools/tematres.php?field=author.person.affiliation'>Script</a></td>
-                </tr>            
+                </tr>
+                <tr>
+                    <td class="uk-text-bold"><a href="">Agências de fomento</a></td>
+                    <td><?php echo $resultFunder["correct"]; ?></td>
+                    <td><?php echo $resultFunder["notCorrect"]; ?></td>
+                    <td><?php echo $resultFunder["totalOccorrences"]; ?></td>
+                    <td><?php echo number_format(($resultFunder["correct"] * 100) / $resultFunder["totalOccorrences"], 2, '.', ''); ?>%</td>
+                    <td><a target="_blank" rel="noopener noreferrer" href='../tools/tematres.php?field=funder'>Script</a></td>
+                </tr>                               
             </tbody>
         </table>
 
