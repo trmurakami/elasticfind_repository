@@ -21,6 +21,12 @@ $result_get = Requests::getParser($_GET);
 $limit = $result_get['limit'];
 $page = $result_get['page'];
 
+
+
+
+
+
+
 $params = [];
 $params["index"] = $index;
 $params["body"] = $result_get['query'];
@@ -34,10 +40,16 @@ if (isset($_GET["sort"])) {
     $result_get['query']["sort"][$_GET["sort"]]["mode"] = "max";
 } else {
     $result_get['query']['sort']['datePublished.keyword']['order'] = "desc";
-    $result_get['query']['sort']['name.keyword']['order'] = "asc";
+    $result_get['query']["sort"]["_uid"]["unmapped_type"] = "long";
+    $result_get['query']["sort"]["_uid"]["missing"] = "_last";
+    $result_get['query']["sort"]["_uid"]["order"] = "desc";
+    $result_get['query']["sort"]["_uid"]["mode"] = "max";    
+    //$result_get['query']['sort']['name.keyword']['order'] = "asc";
 }
 
+print_r($result_get, true);
 
+$params["body"] = $result_get['query'];
 $params["size"] = $limit;
 $params["from"] = $result_get['skip'];
 $cursor = $client->search($params);
