@@ -804,5 +804,305 @@ class Homepage
     }      
 }
 
+/**
+ * Exporters
+ *
+ * @category Class
+ * @package  Exporters
+ * @author   Tiago Rodrigo Marçal Murakami <tiago.murakami@dt.sibi.usp.br>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://github.com/sibiusp/nav_elastic
+ */
+class Exporters
+{
+
+    static function RIS($cursor)
+    {
+
+        $record = [];
+        switch ($cursor["_source"]["type"]) {
+        case "ARTIGO DE PERIODICO":
+            $record[] = "TY  - JOUR";
+            break;
+        case "PARTE DE MONOGRAFIA/LIVRO":
+            $record[] = "TY  - CHAP";
+            break;
+        case "TRABALHO DE EVENTO-RESUMO":
+            $record[] = "TY  - CPAPER";
+            break;
+        case "TEXTO NA WEB":
+            $record[] = "TY  - ICOMM";
+            break;
+        }
+
+        $record[] = "TI  - ".$cursor["_source"]['name']."";
+
+        if (!empty($cursor["_source"]['datePublished'])) {
+            $record[] = "PY  - ".$cursor["_source"]['datePublished']."";
+        }
+
+        foreach ($cursor["_source"]['author'] as $autores) {
+            $record[] = "AU  - ".$autores["person"]["name"]."";
+        }
+
+        if (!empty($cursor["_source"]["releasedEvent"])) {
+            $record[] = "T2  - ".$cursor["_source"]["releasedEvent"]."";
+            if (!empty($cursor["_source"]["isPartOf"]["name"])) {
+                $record[] = "J2  - ".$cursor["_source"]["isPartOf"]["name"]."";
+            }
+        } else {
+            if (!empty($cursor["_source"]["isPartOf"]["name"])) {
+                $record[] = "T2  - ".$cursor["_source"]["isPartOf"]["name"]."";
+            }
+        }
+
+        if (!empty($cursor["_source"]['isPartOf']['issn'])) {
+            $record[] = "SN  - ".$cursor["_source"]['isPartOf']['issn'][0]."";
+        }
+
+        if (!empty($cursor["_source"]["doi"])) {
+            $record[] = "DO  - ".$cursor["_source"]["doi"]."";
+        }
+
+        if (!empty($cursor["_source"]["url"])) {
+            $record[] = "UR  - ".$cursor["_source"]["url"][0]."";
+        }
+
+        if (!empty($cursor["_source"]["publisher"]["organization"]["location"])) {
+            $record[] = "PP  - ".$cursor["_source"]["publisher"]["organization"]["location"]."";
+        }
+
+        if (!empty($cursor["_source"]["publisher"]["organization"]["name"])) {
+            $record[] = "PB  - ".$cursor["_source"]["publisher"]["organization"]["name"]."";
+        }
+
+        if (!empty($cursor["_source"]["isPartOf"]["USP"]["dados_do_periodico"])) {
+            $periodicos_array = explode(",", $cursor["_source"]["isPartOf"]["USP"]["dados_do_periodico"]);
+            foreach ($periodicos_array as $periodicos_array_new) {
+                if (strpos($periodicos_array_new, 'v.') !== false) {
+                    $record[] = "VL  - ".trim(str_replace("v.", "", $periodicos_array_new))."";
+                } elseif (strpos($periodicos_array_new, 'n.') !== false) {
+                    $record[] = "IS  - ".str_replace("n.", "", trim(str_replace("n.", "", $periodicos_array_new)))."";
+                } elseif (strpos($periodicos_array_new, 'p.') !== false) {
+                    $record[] = "SP  - ".str_replace("p.", "", trim(str_replace("p.", "", $periodicos_array_new)))."";
+                }
+
+            }
+        }
+
+        $record[] = "ER  - ";
+        $record[] = "";
+        $record[] = "";
+
+        $record_blob = implode("\\n", $record);
+
+        return $record_blob;
+
+    }
+
+    static function bibtex($cursor)
+    {
+
+        $record = [];
+
+        if (!empty($cursor["_source"]['name'])) {
+            $recordContent[] = 'title   = {'.$cursor["_source"]['name'].'}';
+        }
+
+        if (!empty($cursor["_source"]['author'])) {
+            $authorsArray = [];
+            foreach ($cursor["_source"]['author'] as $author) {
+                $authorsArray[] = $author["person"]["name"];
+            }
+            $recordContent[] = 'author = {'.implode(" and ", $authorsArray).'}';
+        }
+
+        if (!empty($cursor["_source"]['datePublished'])) {
+            $recordContent[] = 'year = {'.$cursor["_source"]['datePublished'].'}';
+        }
+
+        if (!empty($cursor["_source"]['doi'])) {
+            $recordContent[] = 'doi = {'.$cursor["_source"]['doi'].'}';
+        }
+
+        if (!empty($cursor["_source"]['publisher']['organization']['name'])) {
+            $recordContent[] = 'publisher = {'.$cursor["_source"]['publisher']['organization']['name'].'}';
+        }
+
+        if (!empty($cursor["_source"]["releasedEvent"])) {
+            $recordContent[] = 'booktitle   = {'.$cursor["_source"]["releasedEvent"].'}';
+        } else {
+            if (!empty($cursor["_source"]["isPartOf"]["name"])) {
+                $recordContent[] = 'journal   = {'.$cursor["_source"]["isPartOf"]["name"].'}';
+            }
+        }
+
+
+        $sha256 = hash('sha256', ''.implode("", $recordContent).'');
+
+        switch ($cursor["_source"]["type"]) {
+        case "ARTIGO DE PERIODICO":
+            $record[] = '@article{article'.substr($sha256, 0, 8).',';
+            $record[] = implode(",\\n", $recordContent);
+            $record[] = '}';
+            break;
+        case "MONOGRAFIA/LIVRO":
+            $record[] = '@book{book'.substr($sha256, 0, 8).',';
+            $record[] = implode(",\\n", $recordContent);
+            $record[] = '}';
+            break;
+        case "PARTE DE MONOGRAFIA/LIVRO":
+            $record[] = '@inbook{inbook'.substr($sha256, 0, 8).',';
+            $record[] = implode(",\\n", $recordContent);
+            $record[] = '}';
+            break;
+        case "TRABALHO DE EVENTO":
+            $record[] = '@inproceedings{inproceedings'.substr($sha256, 0, 8).',';
+            $record[] = implode(",\\n", $recordContent);
+            $record[] = '}';
+            break;
+        case "TRABALHO DE EVENTO-RESUMO":
+            $record[] = '@inproceedings{inproceedings'.substr($sha256, 0, 8).',';
+            $record[] = implode(",\\n", $recordContent);
+            $record[] = '}';
+            break;
+        case "TESE":
+            $record[] = '@mastersthesis{mastersthesis'.substr($sha256, 0, 8).',';
+            $recordContent[] = 'school = {Universidade de São Paulo}';
+            $record[] = implode(",\\n", $recordContent);
+            $record[] = '}';
+            break;
+        default:
+            $record[] = '@misc{misc'.substr($sha256, 0, 8).',';
+            $record[] = implode(",\\n", $recordContent);
+            $record[] = '}';
+        }
+
+
+        $record_blob = implode("\\n", $record);
+
+        return $record_blob;
+
+    }
+
+    static function table($r)
+    {
+        $fields[] = $r['_id'];
+        $fields[] = "Não foi possível coletar";
+
+        foreach ($r["_source"]['authorUSP'] as $numUSP_aut) {
+            if (isset($numUSP_aut["codpes"])) {
+                $fields[] = $numUSP_aut["codpes"];
+            } else {
+                $fields[] = "Não preenchido corretamente";
+            }
+
+            $fields[] = $numUSP_aut["name"];
+        }
+
+
+        foreach ($r["_source"]['author'] as $authors) {
+            if (empty($authors["person"]["potentialAction"])) {
+                $fields[] = $authors["person"]["name"];
+            } else {
+                $orientadores_array[] = $authors["person"]["name"];
+            }
+        }
+        if (isset($orientadores_array)) {
+            $array_orientadores = implode("; ", $orientadores_array);
+            unset($orientadores_array);
+            $fields[] = $array_orientadores;
+        } else {
+            $fields[] = "Não preenchido";
+        }
+
+        if (isset($r["_source"]['USP']['codpesOrientador'])) {
+            foreach ($r["_source"]['USP']['codpesOrientador'] as $codpesOrientador) {
+                $array_codpesOrientador[] = $codpesOrientador;
+            }
+        }
+        if (isset($array_codpesOrientador)) {
+            $array_codpesOrientadores = implode("; ", $array_codpesOrientador);
+            unset($array_codpesOrientador);
+            $fields[] = $array_codpesOrientadores;
+        } else {
+            $fields[] = "Não preenchido";
+        }
+
+
+
+        if (isset($r["_source"]['USP']['areaconcentracao'])) {
+            $fields[] = $r["_source"]['USP']['areaconcentracao'];
+        } else {
+            $fields[] = "Não preenchido";
+        }
+        if (isset($r["_source"]['inSupportOf'])) {
+            $fields[] = $r["_source"]['inSupportOf'];
+        } else {
+            $fields[] = "Não preenchido";
+        }
+
+        $fields[] = $r["_source"]['language'][0];
+        $fields[] = $r["_source"]['name'];
+
+        if (isset($r["_source"]['description'][0])) {
+            $fields[] = $r["_source"]['description'][0];
+        } else {
+            $fields[] = "Não preenchido";
+        }
+
+        foreach ($r["_source"]['about'] as $subject) {
+            $subject_array[]=$subject;
+        }
+        $array_subject = implode("; ", $subject_array);
+        unset($subject_array);
+        $fields[] = $array_subject;
+
+        if (isset($r["_source"]['alternateName'])) {
+            $fields[] = $r["_source"]['alternateName'];
+        } else {
+            $fields[] = "Não preenchido";
+        }
+
+        if (isset($r["_source"]['descriptionEn'])) {
+            foreach ($r["_source"]['descriptionEn'] as $descriptionEn) {
+                $descriptionEn_array[] = $descriptionEn;
+            }
+            $array_descriptionEn = implode(" ", $descriptionEn_array);
+            unset($descriptionEn_array);
+            $fields[] = $array_descriptionEn;
+        } else {
+            $fields[] = "Não preenchido";
+        }
+
+        $fields[] = $r["_source"]['datePublished'];
+
+        $fields[] = $r["_source"]['publisher']['organization']['location'];
+
+        if (isset($r["_source"]['dateCreated'])) {
+            $fields[] = $r["_source"]['dateCreated'];
+        }
+
+        if (isset($r["_source"]['url'])) {
+            foreach ($r["_source"]['url'] as $url) {
+                $url_array[] = $url;
+            }
+            $array_url = implode("| ", $url_array);
+            unset($url_array);
+            $fields[] = $array_url;
+        }
+
+
+        // $content[] = implode("\t", $fields);
+
+        return implode("\t", $fields)."\n";
+        flush();
+
+        unset($fields);        
+
+    }
+
+}
+
 
 ?>
