@@ -8,7 +8,7 @@
 
         <title>Biblioteca Digital de Produção Intelectual da Universidade de São Paulo</title>
 
-        <link rel="stylesheet" type="text/css" href="https://zzseba78.github.io/Kick-Off/css/marketing.css">
+        <link rel="stylesheet" type="text/css" href="inc/css/marketing.css">
 
     </head>
     <body>

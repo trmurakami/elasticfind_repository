@@ -37,8 +37,7 @@ if (isset($_GET["sort"])) {
     $result_get['query']["sort"]["_uid"]["unmapped_type"] = "long";
     $result_get['query']["sort"]["_uid"]["missing"] = "_last";
     $result_get['query']["sort"]["_uid"]["order"] = "desc";
-    $result_get['query']["sort"]["_uid"]["mode"] = "max";    
-    //$result_get['query']['sort']['name.keyword']['order'] = "asc";
+    $result_get['query']["sort"]["_uid"]["mode"] = "max";
 }
 
 $params["body"] = $result_get['query'];

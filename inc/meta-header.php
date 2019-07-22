@@ -4,11 +4,11 @@
             <link rel="shortcut icon" href="<?php echo $url_base; ?>/inc/images/faviconUSP.ico" type="image/x-icon">
 
             <!-- CSS FILES -->
-            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/css/uikit.min.css">            
+            <link rel="stylesheet" type="text/css" href="<?php echo $url_base; ?>/inc/css/uikit.min.css">            
 
             <!-- JS FILES -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit-icons.min.js"></script>            
+            <script src="<?php echo $url_base; ?>/inc/js/uikit.min.js"></script>
+            <script src="<?php echo $url_base; ?>/inc/js/uikit-icons.min.js"></script>            
 
 <!--
 <script src="< ?php echo $url_base; ?>/inc/js/jquery.min.js"></script>
