@@ -760,41 +760,57 @@ class Homepage
         $response = Elasticsearch::search(null, 10, $query);
 
         foreach ($response["hits"]["hits"] as $r) {
-            echo '<article class="uk-comment">
-            <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>';
-            if (!empty($r["_source"]['unidadeUSP'])) {
-                $file = 'inc/images/logosusp/'.$r["_source"]['unidadeUSP'][0].'.jpg';
-            } else {
-                $file = "";
-            }
-            if (file_exists($file)) {
-                echo '<div class="uk-width-auto"><img class="uk-comment-avatar" src="'.$file.'" width="60" height="60" alt=""></div>';
-            } else {
 
-            };
-            echo '<div class="uk-width-expand">';
-            if (!empty($r["_source"]['name'])) {
-                echo '<a href="item/'.$r['_id'].'"><h4 class="uk-comment-title uk-margin-remove">'.$r["_source"]['name'].'';
-                if (!empty($r["_source"]['datePublished'])) {
-                    echo ' ('.$r["_source"]['datePublished'].')';
+            echo '
+            
+            <div class="card bg-light mb-3">
+            <div class="card-header">'.$r["_source"]['base'][0].' | '.$r["_source"]['type'].'</div>
+            <div class="card-body">
+                <div class="row no-gutters">
+                <div class="col-md-1">
+                ';
+                if (!empty($r["_source"]['unidadeUSP'])) {
+                    $file = 'inc/images/logosusp/'.$r["_source"]['unidadeUSP'][0].'.jpg';
+                } else {
+                    $file = "";
                 }
-                echo '</h4></a>';
-            };
-            echo '<ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-small">';
-            if (!empty($r["_source"]['author'])) {
-                foreach ($r["_source"]['author'] as $autores) {
-                    if (!empty($autores["person"]["orcid"])) {
-                        $orcidLink = ' <a href="'.$autores["person"]["orcid"].'"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png"></a>';
-                    } else {
-                        $orcidLink = '';
-                    }
-                    echo '<li><a href="result.php?filter[]=author.person.name:&quot;'.$autores["person"]["name"].'&quot;">'.$autores["person"]["name"].'</a>'.$orcidLink.'</li>';
-                    unset($orcidLink);
-                }
-                echo '</ul></div>';
-            };
-            echo '</header>';
-            echo '</article>';
+                if (file_exists($file)) {
+                    echo '<img class="card-img" src="'.$file.'" width="60" height="60" alt="Logo '.$r["_source"]['unidadeUSP'][0].'">';
+                } else {
+    
+                };
+                echo '</div>
+                <div class="col-md-11">
+                    <div class="card-body">';
+
+                    if (!empty($r["_source"]['name'])) {
+                        echo '<h5 class="card-title"><a href="item/'.$r['_id'].'">'.$r["_source"]['name'].'';
+                        if (!empty($r["_source"]['datePublished'])) {
+                            echo ' ('.$r["_source"]['datePublished'].')';
+                        }
+                        echo '</a></h5>';
+                    };
+
+                    if (!empty($r["_source"]['author'])) {
+                        foreach ($r["_source"]['author'] as $autores) {
+                            if (!empty($autores["person"]["orcid"])) {
+                                $orcidLink = '<a href="'.$autores["person"]["orcid"].'"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png"></a>';
+                            } else {
+                                $orcidLink = '';
+                            }
+                            $autArray[] = '<a href="result.php?filter[]=author.person.name:&quot;'.$autores["person"]["name"].'&quot;">'.$autores["person"]["name"].'</a> '.$orcidLink.'';
+                            unset($orcidLink);
+                        }
+                        echo '<p class="card-text"><small class="text-muted">'.implode(" | ", $autArray).'</small></p>';
+                        unset($autArray);
+                    };
+
+                    echo '
+                    </div></div>
+                </div>
+                </div>
+            </div>            
+            ';
         }
 
     }
