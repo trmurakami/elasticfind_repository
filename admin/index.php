@@ -40,18 +40,19 @@
 
     <body>
         <?php require 'inc/navbar.php'; ?>
-        <div class="uk-container uk-margin-large-top">
+        <br/><br/><br/><br/>
+        <main role="main" class="container">
 
-        <h3><?php echo $t->gettext('Área de administração e gerenciamento'); ?></h3>
+            <h3><?php echo $t->gettext('Área de administração e gerenciamento'); ?></h3>
 
-        <h4><?php echo $t->gettext('Estatísticas de coleta de fontes externas'); ?></h4>
+            <h4><?php echo $t->gettext('Estatísticas de coleta de fontes externas'); ?></h4>
 
-        <div class="uk-alert-warning" uk-alert>
+        <div class="alert alert-warning" role="alert">
             <p><?php echo $t->gettext('Total de registros'); ?>: <b><?php echo $totalRecords; ?></b></p>
             <p><?php echo $t->gettext('Total de registros com DOI'); ?>: <b><?php echo $totalWithDOI; ?></b></p>
         </div>
 
-        <table class="uk-table">
+        <table class="table">
             <caption><?php echo $t->gettext('Coleta de fontes externas'); ?></caption>
             <thead>
                 <tr>
@@ -91,10 +92,10 @@
             </tbody>
         </table>
 
-        <hr class="uk-grid-divider">
+        <hr>
         <h4>Correções de metadados</h4>
 
-        <table class="uk-table">
+        <table class="table">
             <caption><?php echo $t->gettext('Correções de metadados'); ?></caption>
             <thead>
                 <tr>
@@ -126,18 +127,18 @@
             </tbody>
         </table>
 
-        <hr class="uk-grid-divider">
+        <hr>
         <h4>DSpace</h4>
             <?php
             if (strpos($_SESSION["DSpaceCookies"], 'JSESSIONID') !== false) {
                 echo '
-                <div class="uk-alert-success" uk-alert>
+                <div class="alert alert-success" role="alert">
                     <p>Integração com o DSpace está funcionando.</p>
                 </div>            
                 ';
             } else {
                 echo '
-                <div class="uk-alert-danger" uk-alert>
+                <div class="alert alert-danger" role="alert">
                     <p>Integração com o DSpace NÃO está funcionando.</p>
                 </div>            
                 ';
@@ -146,8 +147,8 @@
 
             ?>
 
-            <table class="uk-table">
-                <caption><?php echo $t->gettext('Registros com Texto completo'); ?></caption>
+            <table class="table">
+                <caption><?php echo $t->gettext('Registros com texto completo disponível'); ?></caption>
                 <thead>
                     <tr>
                         <th><?php echo $t->gettext('Total de registros'); ?></th>
