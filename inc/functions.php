@@ -36,7 +36,9 @@ class Record
         $this->name = $record["_source"]["name"];
         $this->base = $record["_source"]["base"][0];
         $this->type = ucfirst(strtolower($record["_source"]["type"]));
-        $this->originalType = ucfirst(strtolower($record["_source"]["original"]["type"]));
+        if (isset($record["_source"]["original"]["type"])) {
+            $this->originalType = ucfirst(strtolower($record["_source"]["original"]["type"]));
+        }
         if (isset($record["_source"]["datePublished"])) {
             $this->datePublished = $record["_source"]["datePublished"];
         }
@@ -47,7 +49,9 @@ class Record
         if (isset($record["_source"]["country"])) {
             $this->countryArray = $record["_source"]["country"];
         }
-        $this->authorArray = $record["_source"]["author"];
+        if (isset($record["_source"]["author"])) {
+            $this->authorArray = $record["_source"]["author"];
+        }
         if (isset($record["_source"]["description"])) {
             $this->descriptionArray = $record["_source"]["description"];
         }
@@ -135,22 +139,24 @@ class Record
 
 
         /* Authors */
-        echo '<p class="card-text m-0"><small class="text-dark">'.$t->gettext('Autores').': ';
-        foreach ($this->authorArray as $authors) {
-            if (!empty($authors["person"]["orcid"])) {
-                $orcidLink = ' <a href="'.$authors["person"]["orcid"].'"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png"></a>';
-            } else {
-                $orcidLink = '';
+        if (!empty($this->authorArray)) {
+            echo '<p class="card-text m-0"><small class="text-dark">'.$t->gettext('Autores').': ';
+            foreach ($this->authorArray as $authors) {
+                if (!empty($authors["person"]["orcid"])) {
+                    $orcidLink = ' <a href="'.$authors["person"]["orcid"].'"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png"></a>';
+                } else {
+                    $orcidLink = '';
+                }
+                if (!empty($authors["person"]["potentialAction"])) {
+                    $authors_array[]='<a class="text-muted" href="result.php?filter[]=author.person.name:&quot;'.$authors["person"]["name"].'&quot;">'.$authors["person"]["name"].' ('.$authors["person"]["potentialAction"].')</a>'.$orcidLink.'';
+                } else {
+                    $authors_array[]='<a class="text-muted" href="result.php?filter[]=author.person.name:&quot;'.$authors["person"]["name"].'&quot;">'.$authors["person"]["name"].'</a>'.$orcidLink.'';
+                }
+                unset($orcidLink);
             }
-            if (!empty($authors["person"]["potentialAction"])) {
-                $authors_array[]='<a class="text-muted" href="result.php?filter[]=author.person.name:&quot;'.$authors["person"]["name"].'&quot;">'.$authors["person"]["name"].' ('.$authors["person"]["potentialAction"].')</a>'.$orcidLink.'';
-            } else {
-                $authors_array[]='<a class="text-muted" href="result.php?filter[]=author.person.name:&quot;'.$authors["person"]["name"].'&quot;">'.$authors["person"]["name"].'</a>'.$orcidLink.'';
-            }
-            unset($orcidLink);
+            echo implode("; ", $authors_array);
+            echo '</small></p>';
         }
-        echo implode("; ", $authors_array);
-        echo '</small></p>';
 
         echo '<p class="card-text m-0"><small class="text-dark">Unidades USP: ';
         if (!empty($this->unidadeUSPArray)) {

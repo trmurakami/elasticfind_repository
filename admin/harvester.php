@@ -204,6 +204,7 @@ if (isset($_GET["oai"])) {
             $rows = $data->children('http://www.dspace.org/xmlns/dspace/dim');
 
             foreach ($rec->metadata->children('http://www.dspace.org/xmlns/dspace/dim') as $test) {
+                $i = 0;
                 foreach ($test->field as $field) {
                     if ($field->attributes()->element == "title" && empty($field->attributes()->qualifier)) {
                         $body["doc"]["name"] = (string)$field;
@@ -230,7 +231,7 @@ if (isset($_GET["oai"])) {
                         $body["doc"]["description"][] = (string)$field;
                     }
                     if ($field->attributes()->element == "contributor" && $field->attributes()->qualifier == "author") {
-                        $author["person"]["name"] = (string)$field;
+                        $author[$i]["person"]["name"] = (string)$field;
                     }
                     if ($field->attributes()->element == "type") {
                         $body["doc"]["type"] = (string)$field;
@@ -244,7 +245,7 @@ if (isset($_GET["oai"])) {
                     if ($field->attributes()->element == "language" && $field->attributes()->qualifier == "iso") {
                         $body["doc"]["language"][] = (string)$field;
                     }
-
+                    $i++;
                 }
             }
 
@@ -253,7 +254,7 @@ if (isset($_GET["oai"])) {
             $body["doc"]["unidadeUSP"] = (array)$rec->header->setSpec;
             $body["doc"]["identifier"] = (string)$rec->header->identifier;
             if (isset($author)) {
-                $body["doc"]["author"][] = $author;
+                $body["doc"]["author"] = $author;
                 unset($author);
             }
             $body["doc_as_upsert"] = true;
