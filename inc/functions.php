@@ -797,7 +797,26 @@ class Homepage
             echo '</article>';
         }
 
-    }      
+    }
+    
+    static function fieldAgg($field)
+    {
+        global $type;
+        $query = '{
+            "aggs": {
+                "group_by_state": {
+                    "terms": {
+                        "field": "'.$field.'.keyword",
+                        "size" : 5
+                    }
+                }
+            }
+        }';
+        $response = Elasticsearch::search(null, 0, $query);
+        foreach ($response["aggregations"]["group_by_state"]["buckets"] as $facets) {
+            echo '<li class="list-group-item"><a href="result.php?filter[]=base:&quot;'.$facets['key'].'&quot;">'.$facets['key'].' ('.number_format($facets['doc_count'], 0, ',', '.').')</a></li>';
+        }
+    }    
 }
 
 /**
