@@ -134,7 +134,7 @@ class Record
         echo '
         <div class="card">
         <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-muted">'.$this->type.'</h6>
+            <h6 class="card-subtitle mb-2 text-muted">'.$this->base.' | '.$this->type.'</h6>
             <h5 class="card-title"><a class="text-dark" href="item/'.$this->id.'">'.$this->name.' ('.$this->datePublished.')</a></h5>';
 
 
