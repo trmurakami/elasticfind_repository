@@ -14,15 +14,6 @@
 require 'inc/config.php';
 
 
-if (isset($_GET["initialYear"])||isset($_GET["finalYear"])) {
-    echo '<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><div class="alert alert-primary" role="alert">
-    SIM
-    </div>';
-}
-
-print_r($_SERVER);
-
-
 if (isset($fields)) {
     $_GET["fields"] = $fields;
 }
@@ -78,7 +69,7 @@ $cursor = $client->search($params);
         <?php require 'inc/navbar.php'; ?>
         <!-- /NAV -->
 
-        <br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/>
 
         <main role="main">
             <div class="container">
