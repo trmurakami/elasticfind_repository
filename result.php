@@ -43,7 +43,7 @@ if (isset($_GET["sort"])) {
     $result_get['query']["sort"][$_GET["sort"]]["order"] = "desc";
     $result_get['query']["sort"][$_GET["sort"]]["mode"] = "max";
 } else {
-    $result_get['query']['sort']['datePublished.keyword']['order'] = "desc";
+    $result_get['query']['sort']['datePublished']['order'] = "desc";
     $result_get['query']["sort"]["_uid"]["unmapped_type"] = "long";
     $result_get['query']["sort"]["_uid"]["missing"] = "_last";
     $result_get['query']["sort"]["_uid"]["order"] = "desc";

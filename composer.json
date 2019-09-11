@@ -33,7 +33,8 @@
         "seboettg/citeproc-php": "^2",
         "voku/anti-xss": "^4.1",
         "renanbr/crossref-client": "^1.0",
-        "voda/gettext-extractor": "^4.0"
+        "voda/gettext-extractor": "^4.0",
+        "caseyamcl/phpoaipmh": "^3.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15",
