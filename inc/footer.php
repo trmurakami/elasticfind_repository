@@ -1,4 +1,37 @@
-<div class="tm-grid-truncate uk-grid uk-grid-divider uk-text-center" uk-grid>
-    <div class="uk-width-1-2@m uk-row-first"><a href="http://www.sibi.usp.br" target="_blank" rel="noopener noreferrer"><img src="<?php echo $url_base; ?>/inc/images/logo_sibi.jpg" class="uk-thumbnail-mini" width="150px"></a></div>
-    <div class="uk-width-1-2@m"><a href="http://www.usp.br" target="_blank" rel="noopener noreferrer"><img src="<?php echo $url_base; ?>/inc/images/logo-footer.png"></a></div>
-</div>
+<footer class="pt-4 my-md-5 pt-md-5 border-top container">
+    <div class="row">
+        <div class="col-12 col-md">
+        <img class="mb-2" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+        <small class="d-block mb-3 text-muted">&copy; 2017-2019</small>
+        </div>
+        <div class="col-6 col-md">
+        <h5>Features</h5>
+        <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Cool stuff</a></li>
+            <li><a class="text-muted" href="#">Random feature</a></li>
+            <li><a class="text-muted" href="#">Team feature</a></li>
+            <li><a class="text-muted" href="#">Stuff for developers</a></li>
+            <li><a class="text-muted" href="#">Another one</a></li>
+            <li><a class="text-muted" href="#">Last time</a></li>
+        </ul>
+        </div>
+        <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Resource</a></li>
+            <li><a class="text-muted" href="#">Resource name</a></li>
+            <li><a class="text-muted" href="#">Another resource</a></li>
+            <li><a class="text-muted" href="#">Final resource</a></li>
+        </ul>
+        </div>
+        <div class="col-6 col-md">
+        <h5>About</h5>
+        <ul class="list-unstyled text-small">
+            <li><a class="text-muted" href="#">Team</a></li>
+            <li><a class="text-muted" href="#">Locations</a></li>
+            <li><a class="text-muted" href="#">Privacy</a></li>
+            <li><a class="text-muted" href="#">Terms</a></li>
+        </ul>
+        </div>
+    </div>
+</footer>

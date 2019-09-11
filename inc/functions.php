@@ -127,29 +127,15 @@ class Record
 
     public function simpleRecordMetadata($t)
     {
-        echo '<li>';
-        echo '<div class="uk-grid-divider uk-padding-small" uk-grid>';
-        echo '<div class="uk-width-1-5@m">';
-        echo '<p><a href="http://'.$_SERVER['SERVER_NAME'].''.$_SERVER['SCRIPT_NAME'].''.$_SERVER['QUERY_STRING'].'&filter[]=type:&quot;'.$this->type.'&quot;">'.$this->type.'</a></p>';
-        echo '<p>Unidades USP: ';
-        if (!empty($this->unidadeUSPArray)) {
-            $unique =  array_unique($this->unidadeUSPArray);
-            foreach ($unique as $unidadeUSP) {
-                echo '<a href="result.php?filter[]=unidadeUSP:&quot;'.$unidadeUSP.'&quot;">'.$unidadeUSP.' </a>';
-            }
-        }
-        echo '</p>';
-        if (!empty($this->isbn)) {
-            $cover_link = 'https://covers.openlibrary.org/b/isbn/'.$this->isbn.'-M.jpg';
-            echo  '<p><img src="'.$cover_link.'"></p>';
-        }
-        echo '</div>';
-        echo '<div class="uk-width-4-5@m">';
-        echo '<article class="uk-article">';
-        echo '<p class="uk-text-lead uk-margin-remove" style="font-size:115%"><a class="uk-link-reset" href="item/'.$this->id.'">'.$this->name.' ('.$this->datePublished.')</a></p>';
+        echo '
+        <div class="card">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">'.$this->type.'</h6>
+            <h5 class="card-title"><a class="text-dark" href="item/'.$this->id.'">'.$this->name.' ('.$this->datePublished.')</a></h5>';
+
 
         /* Authors */
-        echo '<p class="uk-article-meta uk-margin-remove">'.$t->gettext('Autores').': ';
+        echo '<p class="card-text m-0"><small class="text-dark">'.$t->gettext('Autores').': ';
         foreach ($this->authorArray as $authors) {
             if (!empty($authors["person"]["orcid"])) {
                 $orcidLink = ' <a href="'.$authors["person"]["orcid"].'"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png"></a>';
@@ -157,51 +143,54 @@ class Record
                 $orcidLink = '';
             }
             if (!empty($authors["person"]["potentialAction"])) {
-                $authors_array[]='<a href="result.php?filter[]=author.person.name:&quot;'.$authors["person"]["name"].'&quot;">'.$authors["person"]["name"].' ('.$authors["person"]["potentialAction"].')</a>'.$orcidLink.'';
+                $authors_array[]='<a class="text-muted" href="result.php?filter[]=author.person.name:&quot;'.$authors["person"]["name"].'&quot;">'.$authors["person"]["name"].' ('.$authors["person"]["potentialAction"].')</a>'.$orcidLink.'';
             } else {
-                $authors_array[]='<a href="result.php?filter[]=author.person.name:&quot;'.$authors["person"]["name"].'&quot;">'.$authors["person"]["name"].'</a>'.$orcidLink.'';
+                $authors_array[]='<a class="text-muted" href="result.php?filter[]=author.person.name:&quot;'.$authors["person"]["name"].'&quot;">'.$authors["person"]["name"].'</a>'.$orcidLink.'';
             }
             unset($orcidLink);
         }
-        $array_aut = implode("; ", $authors_array);
-        print_r($array_aut);
-        echo '</p>';
+        echo implode("; ", $authors_array);
+        echo '</small></p>';
+
+        echo '<p class="card-text m-0"><small class="text-dark">Unidades USP: ';
+        if (!empty($this->unidadeUSPArray)) {
+            $unique =  array_unique($this->unidadeUSPArray);
+            foreach ($unique as $unidadeUSP) {
+                echo '<a class="text-muted" href="result.php?filter[]=unidadeUSP:&quot;'.$unidadeUSP.'&quot;">'.$unidadeUSP.' </a>';
+            }
+        }
+        echo '</small></p>';        
 
         /* IsPartOf */
         if (!empty($this->isPartOfArray["name"])) {
-            echo '<p class="uk-text-small uk-margin-remove">In: <a href="result.php?filter[]=isPartOf.name:&quot;'.$this->isPartOfArray["name"].'&quot;">'.$this->isPartOfArray["name"].'</a></p>';
+            echo '<p class="card-text m-0"><small class="text-dark">In: <a class="text-muted" href="result.php?filter[]=isPartOf.name:&quot;'.$this->isPartOfArray["name"].'&quot;">'.$this->isPartOfArray["name"].'</a></small></p>';
         }
 
         /*  releasedEvent */
         if (!empty($this->releasedEvent)) {
-            echo '<p class="uk-text-small uk-margin-remove">'.$t->gettext('Nome do evento').': <a href="result.php?filter[]=releasedEvent:&quot;'.$this->releasedEvent.'&quot;">'.$this->releasedEvent.'</a></p>';
+            echo '<p class="card-text m-0"><small class="text-dark">'.$t->gettext('Nome do evento').': <a class="text-muted" href="result.php?filter[]=releasedEvent:&quot;'.$this->releasedEvent.'&quot;">'.$this->releasedEvent.'</a></small></p>';
         }
 
         /* Subjects */
         if (!empty($this->aboutArray)) {
-            echo '<p class="uk-text-small uk-margin-remove">'.$t->gettext('Assuntos').': ';
+            echo '<p class="card-text m-0"><small class="text-dark">'.$t->gettext('Assuntos').': ';
             foreach ($this->aboutArray as $subject) {
-                echo '<a href="result.php?filter[]=about:&quot;'.$subject.'&quot;">'.$subject.'</a> ';
+                $subject_array[] = '<a class="text-muted" href="result.php?filter[]=about:&quot;'.$subject.'&quot;">'.$subject.'</a>';
             }
+            echo implode("; ", $subject_array);
         }
+        echo '</small></p>';
 
         if (!empty($this->url)||!empty($this->doi)) {
             $this->onlineAccess($t);
-        }
-        
-        /* Implementar AJAX */
-        //if ($this->showMetrics == true) {
-        //    if (!empty($this->doi)) {
-        //        $this->metrics($t, $this->doi, $this->completeRecord);
-        //    }
-        //}
+        }        
 
-        echo '</article>';
 
-        echo '</div>';
-        echo '</div>';
-
-        echo '</li>';
+        echo '
+        </div>
+        </div>
+        ';
+       
         flush();
         ob_flush();
 
@@ -215,6 +204,8 @@ class Record
         echo '</p>';
         echo '<h1 class="uk-article-title uk-margin-remove-top uk-link-reset" style="font-size:150%">'.$this->name.' ('.$this->datePublished.')</h1>';
         
+
+        echo '<dl class="row">';
         /* Authors */
         foreach ($this->authorArray as $authors) {
             if (!empty($authors["person"]["orcid"])) {
@@ -231,7 +222,7 @@ class Record
             }
             unset($orcidLink);
         }
-        echo '<p>'.$t->gettext('Autor(es)').'<br/>'.implode("; ", $authorsList).'</p>';
+        echo '<dt class="col-sm-2">'.$t->gettext('Autor(es)').'</dt><dd class="col-sm-10">'.implode("; ", $authorsList).'</dd>';
         
 
         echo '<div class="uk-grid" data-ukgrid>';
@@ -270,16 +261,16 @@ class Record
         }          
 
         echo '</div>';
-        echo '<div class="uk-width-2-3@m">';
-            echo '<ul class="uk-list uk-list-striped uk-text-small">';
+        echo '<div>';
+
+        echo '<dl class="row">';
 
         /* Abstract */
         if (!empty($this->descriptionArray)) {
-            echo '<li class="uk-text-justify">'.$t->gettext('Resumo').': ';
+            echo '<dt class="col-sm-3">'.$t->gettext('Resumo').': </dt>';
             foreach ($this->descriptionArray as $resumo) {
-                echo $resumo;
+                echo '<dd class="col-sm-9">'.$resumo.'</dd>';
             }
-            echo '</li>';
         }        
         
         /* USP Units */
@@ -288,19 +279,19 @@ class Record
                 $unidadeUSPList[] = '<a href="'.$url_base.'/result.php?filter[]=unidadeUSP:&quot;'.$unidadeUSP.'&quot;">'.$unidadeUSP.'</a>';
             }
             $unidadeUSPListUnique = array_unique($unidadeUSPList);
-            echo '<li>'.$t->gettext('Unidades USP').': '.implode("; ", $unidadeUSPListUnique).'</li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Unidades USP').'</dt><dd class="col-sm-9">'.implode("; ", $unidadeUSPListUnique).'</dd>';
         }
         
         /* Programa Sigla Pós */
         if (!empty($this->programa_pos_sigla)) {
             $programa_pos_sigla = $this->programa_pos_sigla;
             $programa_pos_siglaList[] = '<a href="'.$url_base.'/result.php?filter[]=programa_pos_sigla:&quot;'.$programa_pos_sigla.'&quot;">'.$programa_pos_sigla.'</a>';
-            echo '<li>'.$t->gettext('Sigla do Departamento').': '.implode("; ", $programa_pos_siglaList).'</li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Sigla do Departamento').'</dt><dd class="col-sm-9>'.implode("; ", $programa_pos_siglaList).'</dd>';
         }
         
         /* DOI */
         if (!empty($this->doi)) {
-            echo '<li>DOI: <a href="https://doi.org/'.$this->doi.'" target="_blank" rel="noopener noreferrer">'.$this->doi.'</a></li>';
+            echo '<dt class="col-sm-3">DOI</dt><dd class="col-sm-9"><a href="https://doi.org/'.$this->doi.'" target="_blank" rel="noopener noreferrer">'.$this->doi.'</a></dd>';
         }
 
         /* DOI */
@@ -315,7 +306,7 @@ class Record
             foreach ($this->aboutArray as $subject) {
                 $subjectList[] = '<a href="'.$url_base.'/result.php?filter[]=about:&quot;'.$subject.'&quot;">'.$subject.'</a>';
             }
-            echo '<li>'.$t->gettext('Assuntos').': '.implode("; ", $subjectList).'</li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Assuntos').'</dt><dd class="col-sm-9">'.implode("; ", $subjectList).'</dd>';
         }
             
         /* BDTD Subject */
@@ -323,15 +314,15 @@ class Record
             foreach ($this->aboutBDTDArray as $subject_BDTD) {
                 $subjectBDTDList[] = '<a href="'.$url_base.'/result.php?filter[]=USP.about_BDTD:&quot;'.$subject_BDTD.'&quot;">'.$subject_BDTD.'</a>';
             }
-            echo '<li>'.$t->gettext('Palavras-chave do autor').': '.implode("; ", $subjectBDTDList).'</li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Palavras-chave do autor').'</dt><dd class="col-sm-9">'.implode("; ", $subjectBDTDList).'</dd>';
         }
         
         /* Funder */
         if ($this->funderArray > 0) {
-            echo '<li>'.$t->gettext('Agências de fomento').': ';
-            echo '<ul class="uk-list uk-text-small">';
+            echo '<dt class="col-sm-3">'.$t->gettext('Agências de fomento').'</dt>';
+            echo '<dd class="col-sm-9"><dl class="row">';
             foreach ($this->funderArray as $funder) {
-                echo '<li><a href="'.$url_base.'/result.php?filter[]=funder:&quot;'.$funder["name"].'&quot;">'.$funder["name"].'</a>';
+                echo '<dd class="col-sm-12"><a href="'.$url_base.'/result.php?filter[]=funder:&quot;'.$funder["name"].'&quot;">'.$funder["name"].'</a>';
                 if (!empty($funder["projectNumber"]) && $funder["name"] == "Fundação de Amparo à Pesquisa do Estado de São Paulo (FAPESP)") {
                     foreach ($funder["projectNumber"] as $projectNumber) {
                         $projectNumber = str_replace(" ", "", $projectNumber);
@@ -339,9 +330,9 @@ class Record
                         echo '<br/>Processo FAPESP: <a href="http://bv.fapesp.br/pt/processo/'.$projectNumberMatchArray[0].'" target="_blank" rel="noopener noreferrer">'.$projectNumber.'</a>';
                     }
                 }
-                echo '</li>';
+                echo '</dd>';
             }
-            echo '</ul></li>';
+            echo '</dl></dd>';
         }
         
         /* Funder - Crossref */
@@ -377,44 +368,43 @@ class Record
 
         /* Source */
         if (!empty($this->isPartOfArray)) {
-            echo '<li>'.$t->gettext('Fonte').':<ul>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Fonte').'</dt><dd class="col-sm-9"><dl class="row">';
             if (!empty($this->isPartOfArray["name"])) {
-                    echo '<li>Título do periódico: <a href="'.$url_base.'/result.php?filter[]=isPartOf.name:&quot;'.$this->isPartOfArray["name"].'&quot;">'.$this->isPartOfArray["name"].'</a></li>';
+                    echo '<dt class="col-sm-4">Título do periódico</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=isPartOf.name:&quot;'.$this->isPartOfArray["name"].'&quot;">'.$this->isPartOfArray["name"].'</a></dd>';
             }
             if (!empty($this->isPartOfArray['issn'][0])) {
-                echo '<li>ISSN: <a href="'.$url_base.'/result.php?filter[]=issn:&quot;'.$this->isPartOfArray['issn'][0].'&quot;">'.$this->isPartOfArray['issn'][0].'</a></li>';
+                echo '<dt class="col-sm-4">ISSN</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=issn:&quot;'.$this->isPartOfArray['issn'][0].'&quot;">'.$this->isPartOfArray['issn'][0].'</a></dd>';
             }
             if (!empty($this->isPartOfArray["USP"]["dados_do_periodico"])) {
-                echo '<li>Volume/Número/Paginação/Ano: '.$this->isPartOfArray["USP"]["dados_do_periodico"].'</li>';
+                echo '<dt class="col-sm-4">Volume/Número/Paginação/Ano</dt><dd class="col-sm-8">'.$this->isPartOfArray["USP"]["dados_do_periodico"].'</dd>';
             }
-            echo '</ul></li>';
+            echo '</dl></dd>';
         }
 
         /*  releasedEvent */
         if (!empty($this->releasedEvent)) {
-            echo '<li>'.$t->gettext('Nome do evento').': <a href="'.$url_base.'/result.php?filter[]=releasedEvent:&quot;'.$this->releasedEvent.'&quot;">'.$this->releasedEvent.'</a></li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Nome do evento').'</dt><dd class="col-sm-9"><a href="'.$url_base.'/result.php?filter[]=releasedEvent:&quot;'.$this->releasedEvent.'&quot;">'.$this->releasedEvent.'</a></dd>';
         }          
 
         /* Language */
         foreach ($this->languageArray as $language) {
             $languageList[] = '<a href="'.$url_base.'/result.php?filter[]=language:&quot;'.$language.'&quot;">'.$language.'</a>';
         }
-        echo '<li>'.$t->gettext('Idioma').': '.implode("; ", $languageList).'</li>';
+        echo '<dt class="col-sm-3">'.$t->gettext('Idioma').'</dt><dd class="col-sm-9">'.implode("; ", $languageList).'</dd>';
         
         /* Imprint */
         if (!empty($this->publisherArray)) {
-            echo '<li>'.$t->gettext('Imprenta').':';
-            echo '<ul>';
-                if (!empty($this->publisherArray["organization"]["name"])) {
-                    echo '<li>'.$t->gettext('Editora').': <a href="'.$url_base.'/result.php?filter[]=publisher.organization.name:&quot;'.$this->publisherArray["organization"]["name"].'&quot;">'.$this->publisherArray["organization"]["name"].'</a></li>';
-                }
-                if (!empty($this->publisherArray["organization"]["location"])) {
-                    echo '<li>'.$t->gettext('Local').': <a href="'.$url_base.'/result.php?filter[]=publisher.organization.location:&quot;'.$this->publisherArray["organization"]["location"].'&quot;">'.$this->publisherArray["organization"]["location"].'</a></li>';
-                }
-                if (!empty($this->datePublished)) {
-                    echo '<li>'.$t->gettext('Data de publicação').': <a href="'.$url_base.'/result.php?filter[]=datePublished:&quot;'.$this->datePublished.'&quot;">'.$this->datePublished.'</a></li>';
-                }
-            echo '</ul></li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Imprenta').'</dt><dd class="col-sm-9"><dl class="row">';
+            if (!empty($this->publisherArray["organization"]["name"])) {
+                echo '<dt class="col-sm-4">'.$t->gettext('Editora').'</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=publisher.organization.name:&quot;'.$this->publisherArray["organization"]["name"].'&quot;">'.$this->publisherArray["organization"]["name"].'</a></dd>';
+            }
+            if (!empty($this->publisherArray["organization"]["location"])) {
+                echo '<dt class="col-sm-4">'.$t->gettext('Local').'</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=publisher.organization.location:&quot;'.$this->publisherArray["organization"]["location"].'&quot;">'.$this->publisherArray["organization"]["location"].'</a></dd>';
+            }
+            if (!empty($this->datePublished)) {
+                echo '<dt class="col-sm-4">'.$t->gettext('Data de publicação').'</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=datePublished:&quot;'.$this->datePublished.'&quot;">'.$this->datePublished.'</a></dd>';
+            }
+            echo '</dl></dd>';
         }
         if (isset($_SESSION['oauthuserdata'])) {
             if ($this->crossrefArray > 0) {
@@ -450,12 +440,12 @@ class Record
 
         /* Data da defesa */
         if (!empty($this->dateCreated)) {
-            echo '<li>Data da defesa: '.$this->dateCreated.'</a></li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Data da defesa').'</dt><dd class="col-sm-9">'.$this->dateCreated.'</a></dd>';
         }
 
         /* Phisical description */
         if (!empty($this->numberOfPages)) {
-            echo '<li>Descrição física: '.$this->numberOfPages.'</a></li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Descrição física').'</dt><dd class="col-sm-9">'.$this->numberOfPages.'</a></dd>';
         }
 
         /* Award */
@@ -463,20 +453,20 @@ class Record
             foreach ($this->awardArray as $award) {
                 $awardList[] = '<a href="'.$url_base.'/result.php?filter[]=award:&quot;'.$award.'&quot;">'.$award.'</a>';
             }
-            echo '<li>'.$t->gettext('Premiações recebidas').': '.implode("; ", $awardList).'</li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Premiações recebidas').'</dt><dd class="col-sm-9">'.implode("; ", $awardList).'</dd>';
         }
 
         /* ISBN */
         if (!empty($this->isbn)) {
-            echo '<li>ISBN: '.$this->isbn.'</a></li>';
+            echo '<dt class="col-sm-3">ISBN</dt><dd class="col-sm-9">'.$this->isbn.'</a></dd>';
         }
         
         /* USP Authors */
         if (!empty($this->authorUSPArray)) {
             foreach ($this->authorUSPArray as $autoresUSP) {
-                $authorsUSPList[] = '<li><a href="'.$url_base.'/result.php?filter[]=authorUSP.name:&quot;'.$autoresUSP["name"].'&quot;">'.$autoresUSP["name"].' - '.$autoresUSP["unidadeUSP"].' </a></li>';
+                $authorsUSPList[] = '<dd class="col-sm-12"><a href="'.$url_base.'/result.php?filter[]=authorUSP.name:&quot;'.$autoresUSP["name"].'&quot;">'.$autoresUSP["name"].' - '.$autoresUSP["unidadeUSP"].' </a></dd>';
             }
-            echo '<li>'.$t->gettext('Autores USP').': <ul>'.implode("", $authorsUSPList).'</ul></li>';
+            echo '<dt class="col-sm-3">'.$t->gettext('Autores USP').'</dt><dd class="col-sm-9"><dl class="row">'.implode("", $authorsUSPList).'</dl></dd>';
         }        
 
         echo '</div>';

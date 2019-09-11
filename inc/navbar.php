@@ -1,34 +1,44 @@
-<div class="nav" data-uk-sticky="cls-active: uk-background-secondary uk-box-shadow-medium; top: 100vh; animation: uk-animation-slide-top">
-    <div class="uk-container">
-        <nav class="uk-navbar uk-navbar-container uk-navbar-transparent" data-uk-navbar>
-            <div class="uk-navbar-left">
-                <div class="uk-navbar-item uk-padding-remove-horizontal">
-                    <a class="uk-logo" title="Biblioteca Digital da Produção Intelectual da USP" href="<?php echo "$url_base/"?>index.php"><img src="img/marketing-logo.svg" alt="Biblioteca Digital da Produção Intelectual da USP"></a>
-                </div>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="<?php echo "$url_base/"?>">BDPI USP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+            <a class="nav-link" href="<?php echo "$url_base/"?>index.php">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Busca avançada</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Unidades USP</a>
+            </li>            
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="#">Pesquisar por sua produção</a>
+                <a class="dropdown-item" href="#">Dashboard de sua produção</a>
+                <a class="dropdown-item" href="#">Exportar sua produçao em formato RIS</a>
+                <a class="dropdown-item" href="#">Exportar sua produçao em formato Bibtex</a>
+                <a class="dropdown-item" href="#">Acessar a Dashboard</a>
+                <a class="dropdown-item" href="#">Logout</a>
             </div>
-            <div class="uk-navbar-right">
-                <ul class="uk-navbar-nav uk-visible@s">
-                    <li class="uk-active uk-visible@m"><a href="<?php echo "$url_base/"?>index.php" data-uk-icon="home"></a></li>
-                    <li><a href="">Busca avançada</a></li>
-                    <li>
-                        <a href="#" data-uk-icon="chevron-down">SIBI USP</a>
-                        <div class="uk-navbar-dropdown">
-                            <ul class="uk-nav uk-navbar-dropdown-nav">
-                                <li><a href="#">Contato</a></li>
-                                <li><a href="#">Sobre</a></li>
-                                <li><a href="#">Tutorial</a></li>
-                                <li><a href="#">Sistema Integrado de Bibliotecas da Universidade de São Paulo</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <?php if (empty($_SESSION['oauthuserdata'])) : ?>
-                        <li><a href="<?php echo "$url_base/"?>aut/oauth.php">Login</a></li>
-                    <?php else: ?>
-                        <li>Logado</li>
-                    <?php endif; ?>
-                </ul>
-                <a class="uk-navbar-toggle uk-navbar-item uk-hidden@s" data-uk-toggle data-uk-navbar-toggle-icon href="#offcanvas-nav"></a>
-            </div>
-        </nav>
+            </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="result.php">
+            <input class="form-control mr-sm-2" type="text" placeholder="Pesquisar" aria-label="Pesquisar" name="search[]">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Pesquisar</button>
+            </form>
+            <li class="nav-item navbar-nav">
+            <a class="nav-link" href="#">English</a>
+            </li>              
+            <li class="nav-item navbar-nav">
+            <a class="nav-link" href="#">Contato</a>
+            </li>            
+        </div>
     </div>
-</div>
+</nav>
