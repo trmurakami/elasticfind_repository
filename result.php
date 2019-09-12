@@ -79,7 +79,7 @@ $cursor = $client->search($params);
                     <!-- PAGINATION -->
                     <?php UI::pagination($page, $total, $limit, $t); ?>
                     <!-- /PAGINATION --> 
-                    <hr>  
+                    <br/>  
 
                     <!-- RECORDS -->
                     <?php
@@ -92,7 +92,7 @@ $cursor = $client->search($params);
                     ?>  
                     <!-- /RECORDS -->
 
-                    <hr>
+                    <br/>
                     <!-- PAGINATION -->
                     <?php UI::pagination($page, $total, $limit, $t); ?>
                     <!-- /PAGINATION -->                                 
