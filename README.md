@@ -1,5 +1,5 @@
 # uspfind
-Ferramenta de Descoberta criado para o Sistema Integrado de Bibliotecas da Universidade de São Paulo
+Repository tool made with PHP and Elasticsearch
 
 
 # Dependencies
