@@ -112,7 +112,8 @@ while ($line = fgets(STDIN)) {
                     }
                 }
                 $body["doc"]["base"][] = "Livros";
-                $response = elasticsearch::elastic_update($id, $type, $body, "opac");
+                //print_r($body);
+                $response = Elasticsearch::update($id, $body, "opac");
                 //print_r($id);
                 
             }
