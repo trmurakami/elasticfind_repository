@@ -1,9 +1,5 @@
 <?php
 
-require 'functions_core/functions_core.php';
-require 'inc/config.php';
-
-
 /*
 * Converte Alephseq em JSON *
 */
