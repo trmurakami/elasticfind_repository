@@ -7,12 +7,46 @@
  * @package  Functions
  * @author   Tiago Rodrigo Marçal Murakami <tiago.murakami@dt.sibi.usp.br>
  */
+
+/* Load libraries for PHP composer */ 
+require (__DIR__.'/../vendor/autoload.php'); 
+
+/* Load Elasticsearch Client */ 
+$client = \Elasticsearch\ClientBuilder::create()->setHosts($hosts)->build(); 
+
+
 if (file_exists('uspfind_core/uspfind_core.php')) {
     include 'uspfind_core/uspfind_core.php';
 } elseif (file_exists('../uspfind_core/uspfind_core.php')) {
     include '../uspfind_core/uspfind_core.php';
 } else {
     include '../../uspfind_core/uspfind_core.php';
+}
+
+/* Definição de idioma */
+if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+    if (empty($_SESSION['localeToUse'])) {
+        $_SESSION['localeToUse'] = Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+    }
+}
+else {
+    if (empty($_SESSION['localeToUse'])) {
+        $_SESSION['localeToUse'] = Locale::getDefault();
+    }
+}
+if (!empty($_GET['locale'])) {
+    $_SESSION['localeToUse'] = $_GET["locale"];
+} 
+
+
+use Gettext\Translator;
+//Create the translator instance
+$t = new Translator();
+
+if ($_SESSION['localeToUse'] == 'pt_BR') {
+    $t->loadTranslations(__DIR__.'/../Locale/pt_BR/LC_MESSAGES/pt_BR.php');
+} else {
+    $t->loadTranslations(__DIR__.'/../Locale/en_US/LC_MESSAGES/en.php');
 }
 
 use Seboettg\CiteProc\CiteProc;
