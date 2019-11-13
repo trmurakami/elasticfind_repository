@@ -303,13 +303,13 @@ function fixes($marc)
 
     if (isset($marc["record"]["773"])) {
         if (isset($marc["record"]["773"]["t"])) {
-            $resultadoTematresPeriodicos = authorities::tematres(trim($marc["record"]["773"]["t"][0]), $tematresUrl);
-            if (!empty($resultadoTematresPeriodicos["found_term"])) {
-                $body["doc"]["isPartOf"]["name"] = $resultadoTematresPeriodicos["found_term"];
-                $body["doc"]["isPartOf"]["tematresOK"] = true;
-            } else {
-                $body["doc"]["isPartOf"]["name"] = $resultadoTematresPeriodicos["term_not_found"];
-            }            
+            // $resultadoTematresPeriodicos = authorities::tematres(trim($marc["record"]["773"]["t"][0]), $tematresUrl);
+            // if (!empty($resultadoTematresPeriodicos["found_term"])) {
+            //     $body["doc"]["isPartOf"]["name"] = $resultadoTematresPeriodicos["found_term"];
+            //     $body["doc"]["isPartOf"]["tematresOK"] = true;
+            // } else {
+                $body["doc"]["isPartOf"]["name"] = trim($marc["record"]["773"]["t"][0]);
+            //}            
         }
         if (isset($marc["record"]["773"]["h"])) {
             $body["doc"]["isPartOf"]["USP"]["dados_do_periodico"] = $marc["record"]["773"]["h"][0];
