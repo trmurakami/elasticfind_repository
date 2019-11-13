@@ -17,5 +17,6 @@ if (isset($testIndex) && $testIndex == false) {
     Elasticsearch::mappingsIndex($index, $client);
 }
 
+header("Location: ../index.php"); die();
 
 ?>
