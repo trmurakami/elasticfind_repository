@@ -44,6 +44,7 @@ if (isset($_GET["sort"])) {
 $params["body"] = $result_get['query'];
 $params["size"] = $limit;
 $params["from"] = $result_get['skip'];
+
 $cursor = $client->search($params);
 
 
@@ -108,41 +109,41 @@ $cursor = $client->search($params);
                     $facets = new Facets();
                     $facets->query = $result_get['query'];
 
-                    $facets->facet("base", 10, $t->gettext('Bases'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("type", 100, $t->gettext('Tipo de material'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("unidadeUSP", 50, $t->gettext('Unidades USP'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("authorUSP.departament", 50, $t->gettext('Departamento'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("author.person.name", 50, $t->gettext('Autores'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("authorUSP.name", 50, $t->gettext('Autores USP'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("datePublished", 80, $t->gettext('Ano de publicação'), "desc", "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("about", 50, $t->gettext('Assuntos'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("language", 40, $t->gettext('Idioma'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("isPartOf.name", 50, $t->gettext('Título da fonte'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("publisher.organization.name", 50, $t->gettext('Editora'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("releasedEvent", 50, $t->gettext('Nome do evento'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("country", 200, $t->gettext('País de publicação'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("USP.grupopesquisa", 100, "Grupo de pesquisa", null, "_term", $_SERVER["QUERY_STRING"]);
-                    $facets->facet("funder.name", 50, $t->gettext('Agência de fomento'), null, "_term", $_SERVER["QUERY_STRING"]);
-                    $facets->facet("USP.indexacao", 50, $t->gettext('Indexado em'), null, "_term", $_SERVER["QUERY_STRING"]);
+                    $facets->facet("base", 10, $t->gettext('Bases'), null, "_term", $_GET);
+                    $facets->facet("type", 100, $t->gettext('Tipo de material'), null, "_term", $_GET);
+                    $facets->facet("unidadeUSP", 50, $t->gettext('Unidades USP'), null, "_term", $_GET);
+                    $facets->facet("authorUSP.departament", 50, $t->gettext('Departamento'), null, "_term", $_GET);
+                    $facets->facet("author.person.name", 50, $t->gettext('Autores'), null, "_term", $_GET);
+                    $facets->facet("authorUSP.name", 50, $t->gettext('Autores USP'), null, "_term", $_GET);
+                    $facets->facet("datePublished", 80, $t->gettext('Ano de publicação'), "desc", "_term", $_GET);
+                    $facets->facet("about", 50, $t->gettext('Assuntos'), null, "_term", $_GET);
+                    $facets->facet("language", 40, $t->gettext('Idioma'), null, "_term", $_GET);
+                    $facets->facet("isPartOf.name", 50, $t->gettext('Título da fonte'), null, "_term", $_GET);
+                    $facets->facet("publisher.organization.name", 50, $t->gettext('Editora'), null, "_term", $_GET);
+                    $facets->facet("releasedEvent", 50, $t->gettext('Nome do evento'), null, "_term", $_GET);
+                    $facets->facet("country", 200, $t->gettext('País de publicação'), null, "_term", $_GET);
+                    $facets->facet("USP.grupopesquisa", 100, "Grupo de pesquisa", null, "_term", $_GET);
+                    $facets->facet("funder.name", 50, $t->gettext('Agência de fomento'), null, "_term", $_GET);
+                    $facets->facet("USP.indexacao", 50, $t->gettext('Indexado em'), null, "_term", $_GET);
                     ?>
                     <li class="uk-nav-header"><?php echo $t->gettext('Colaboração institucional'); ?></li>
                     <?php
-                    $facets->facet("author.person.affiliation.name", 50, $t->gettext('Afiliação dos autores externos'), null, "_term", $_SERVER["QUERY_STRING"], true);
-                    $facets->facet("author.person.affiliation.location", 50, $t->gettext('País das instituições de afiliação dos autores externos'), null, "_term", $_SERVER["QUERY_STRING"]);
+                    $facets->facet("author.person.affiliation.name", 50, $t->gettext('Afiliação dos autores externos'), null, "_term", $_GET);
+                    $facets->facet("author.person.affiliation.location", 50, $t->gettext('País das instituições de afiliação dos autores externos'), null, "_term", $_GET);
                     ?>
                     <li class="uk-nav-header"><?php echo $t->gettext('Métricas do periódico'); ?></li>
                     <?php
-                    $facets->facet("USP.qualis.qualis.2016.area", 50, $t->gettext('Qualis 2013/2016 - Área'), null, "_term", $_SERVER["QUERY_STRING"]);
-                    $facets->facet("USP.qualis.qualis.2016.nota", 50, $t->gettext('Qualis 2013/2016 - Nota'), null, "_term", $_SERVER["QUERY_STRING"]);
-                    $facets->facet("USP.qualis.qualis.2016.area_nota", 50, $t->gettext('Qualis 2013/2016 - Área / Nota'), null, "_term", $_SERVER["QUERY_STRING"]);
+                    $facets->facet("USP.qualis.qualis.2016.area", 50, $t->gettext('Qualis 2013/2016 - Área'), null, "_term", $_GET);
+                    $facets->facet("USP.qualis.qualis.2016.nota", 50, $t->gettext('Qualis 2013/2016 - Nota'), null, "_term", $_GET);
+                    $facets->facet("USP.qualis.qualis.2016.area_nota", 50, $t->gettext('Qualis 2013/2016 - Área / Nota'), null, "_term", $_GET);
                     ?>
                     <li class="uk-nav-header"><?php echo $t->gettext('Teses e Dissertações'); ?></li>
                     <?php
-                    $facets->facet("inSupportOf", 30, $t->gettext('Tipo de tese'), null, "_term", $_SERVER["QUERY_STRING"]);
-                    $facets->facet("USP.areaconcentracao", 100, "Área de concentração", null, "_term", $_SERVER["QUERY_STRING"]);
-                    $facets->facet("USP.programa_pos_sigla", 100, "Sigla do Departamento/Programa de Pós Graduação", null, "_term", $_SERVER["QUERY_STRING"]);
-                    $facets->facet("USP.programa_pos_nome", 100, "Departamento/Programa de Pós Graduação", null, "_term", $_SERVER["QUERY_STRING"]);
-                    $facets->facet("USP.about_BDTD", 50, $t->gettext('Palavras-chave do autor'), null, "_term", $_SERVER["QUERY_STRING"]);
+                    $facets->facet("inSupportOf", 30, $t->gettext('Tipo de tese'), null, "_term", $_GET);
+                    $facets->facet("USP.areaconcentracao", 100, "Área de concentração", null, "_term", $_GET);
+                    $facets->facet("USP.programa_pos_sigla", 100, "Sigla do Departamento/Programa de Pós Graduação", null, "_term", $_GET);
+                    $facets->facet("USP.programa_pos_nome", 100, "Departamento/Programa de Pós Graduação", null, "_term", $_GET);
+                    $facets->facet("USP.about_BDTD", 50, $t->gettext('Palavras-chave do autor'), null, "_term", $_GET);
                     ?>
                     </ul>
                     <!-- < ?php if (!empty($_SESSION['oauthuserdata'])) : ?> -->
@@ -150,21 +151,21 @@ $cursor = $client->search($params);
                         <ul class="uk-nav-default uk-nav-parent-icon" uk-nav="multiple: true">
                         <hr>
                         <?php
-                        $facets->facet("original.type", 100, $t->gettext('Especificidade de tipo de material'), null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("author.person.affiliation.locationTematres", 50, $t->gettext('País Tematres'), null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("USP.internacionalizacao", 10, "Internacionalização", null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("USP.fatorimpacto", 100, "Fator de impacto - 590m", null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("authorUSP.regime_de_trabalho", 50, $t->gettext('Regime de trabalho'), null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("authorUSP.funcao", 50, $t->gettext('Função'), null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("USP.CAT.date", 100, "Data de registro e alterações", "desc", "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("USP.CAT.cataloger", 100, "Catalogador", "desc", "_count", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("authorUSP.codpes", 100, "Número USP", null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("isPartOf.issn", 100, "ISSN", null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("doi", 100, "DOI", null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("USP.crossref.message.funder.name", 50, $t->gettext('Agência de fomento obtida na CrossRef'), null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("USP.fullTextFiles.name", 10, $t->gettext('Texto completo'), null, "_term", $_SERVER["QUERY_STRING"]);
-                        $facets->facet("USP.fullTextFiles.description", 10, $t->gettext('Texto completo - Descrição'), null, "_term", $_SERVER["QUERY_STRING"]);                
-                        //$facets->rebuild_facet("author.person.affiliation.name_not_found", 50, $t->gettext('Afiliação dos autores externos não normalizada'), null, "_term", $_SERVER["QUERY_STRING"]);
+                        $facets->facet("original.type", 100, $t->gettext('Especificidade de tipo de material'), null, "_term", $_GET);
+                        $facets->facet("author.person.affiliation.locationTematres", 50, $t->gettext('País Tematres'), null, "_term", $_GET);
+                        $facets->facet("USP.internacionalizacao", 10, "Internacionalização", null, "_term", $_GET);
+                        $facets->facet("USP.fatorimpacto", 100, "Fator de impacto - 590m", null, "_term", $_GET);
+                        $facets->facet("authorUSP.regime_de_trabalho", 50, $t->gettext('Regime de trabalho'), null, "_term", $_GET);
+                        $facets->facet("authorUSP.funcao", 50, $t->gettext('Função'), null, "_term", $_GET);
+                        $facets->facet("USP.CAT.date", 100, "Data de registro e alterações", "desc", "_term", $_GET);
+                        $facets->facet("USP.CAT.cataloger", 100, "Catalogador", "desc", "_count", $_GET);
+                        $facets->facet("authorUSP.codpes", 100, "Número USP", null, "_term", $_GET);
+                        $facets->facet("isPartOf.issn", 100, "ISSN", null, "_term", $_GET);
+                        $facets->facet("doi", 100, "DOI", null, "_term", $_GET);
+                        $facets->facet("USP.crossref.message.funder.name", 50, $t->gettext('Agência de fomento obtida na CrossRef'), null, "_term", $_GET);
+                        $facets->facet("USP.fullTextFiles.name", 10, $t->gettext('Texto completo'), null, "_term", $_GET);
+                        $facets->facet("USP.fullTextFiles.description", 10, $t->gettext('Texto completo - Descrição'), null, "_term", $_GET);                
+                        //$facets->rebuild_facet("author.person.affiliation.name_not_found", 50, $t->gettext('Afiliação dos autores externos não normalizada'), null, "_term", $_GET);
                         ?>
                         </ul>
                     <!-- < ?php endif; ?> -->

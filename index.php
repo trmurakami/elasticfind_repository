@@ -54,7 +54,7 @@ require 'inc/meta-header.php';
         <form action="result.php">
             <div class="form-group">
                 <label for="searchQuery"><?php echo $t->gettext('Termos de busca'); ?></label>
-                <input type="text" name="search[]" class="form-control" id="searchQuery" aria-describedby="searchHelp" placeholder="<?php echo $t->gettext('Pesquise por termo ou autor'); ?>">
+                <input type="text" name="search" class="form-control" id="searchQuery" aria-describedby="searchHelp" placeholder="<?php echo $t->gettext('Pesquise por termo ou autor'); ?>">
                 <small id="searchHelp" class="form-text text-muted"><?php echo $t->gettext('Dica: Use * para busca por radical. Ex: biblio*.'); ?></small>
             </div>
 
