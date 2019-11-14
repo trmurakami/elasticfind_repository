@@ -63,7 +63,7 @@ while ($line = fgets(STDIN)) {
                     }
                         
                 }
-                $response = elasticsearch::elastic_update($id, $type, $body, "bdta_homologacao");
+                $response = Elasticsearch::update($id, $body);
                 //print_r($id);
 
             } elseif ($marc["record"]["945"]["b"][0] == "TRABALHO DE ESPECIALIZACAO - TCE") {
