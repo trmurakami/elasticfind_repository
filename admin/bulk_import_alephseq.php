@@ -97,7 +97,7 @@ while ($line = fgets(STDIN)) {
                     }
                 }
                 $body["doc"]["base"][] = "E-Books";
-                $response = elasticsearch::elastic_update($id, $type, $body, "ebooks");
+                $response = Elasticsearch::update($id, $body);
 
             } else {
 
@@ -123,7 +123,6 @@ while ($line = fgets(STDIN)) {
             break;
         case 03:
             $update["update"]["_index"] = $index;
-            $update["update"]["_type"] = $type;
             $update["update"]["_id"] = $id;        
             $body = fixes($marc);
             $body["doc"]["base"][] = "Teses e dissertações";
@@ -147,7 +146,6 @@ while ($line = fgets(STDIN)) {
             
         case 04:
             $update["update"]["_index"] = $index;
-            $update["update"]["_type"] = $type;
             $update["update"]["_id"] = $id;
             $body = fixes($marc);
             $body["doc"]["base"][] = "Produção científica";

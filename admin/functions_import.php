@@ -273,13 +273,14 @@ function fixes($marc)
                 $author["person"]["orcid"] = $person["0"];
             }            
             if (!empty($person["8"])) {
-                $resultadoTematres = authorities::tematres(trim($person["8"]), $tematresUrl);
-                if (!empty($resultadoTematres["found_term"])) {
-                    $author["person"]["affiliation"]["name"] = $resultadoTematres["found_term"];
-                    $author["person"]["affiliation"]["locationTematres"] = $resultadoTematres["country"];
-                } else {
-                    $author["person"]["affiliation"]["name_not_found"] = $resultadoTematres["term_not_found"];
-                }
+                // $resultadoTematres = authorities::tematres(trim($person["8"]), $tematresUrl);
+                // if (!empty($resultadoTematres["found_term"])) {
+                //     $author["person"]["affiliation"]["name"] = $resultadoTematres["found_term"];
+                //     $author["person"]["affiliation"]["locationTematres"] = $resultadoTematres["country"];
+                // } else {
+                //     $author["person"]["affiliation"]["name_not_found"] = $resultadoTematres["term_not_found"];
+                // }
+                $author["person"]["affiliation"]["name"] = trim($person["8"]);
             }
             if (!empty($person["9"])) {
                 $author["person"]["affiliation"]["location"] = $person["9"];
