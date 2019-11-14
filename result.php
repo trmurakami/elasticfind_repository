@@ -45,6 +45,9 @@ $params["body"] = $result_get['query'];
 $params["size"] = $limit;
 $params["from"] = $result_get['skip'];
 
+echo "<br/><br/><br/><br/><br/><br/>";
+print_r($params);
+
 $cursor = $client->search($params);
 
 
