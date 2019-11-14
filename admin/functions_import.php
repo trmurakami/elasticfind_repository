@@ -196,13 +196,14 @@ function fixes($marc)
     if (isset($marc["record"]["536"])) {
         $i_funder = 0;
         foreach (($marc["record"]["536"]) as $funder) {
-            $resultado_tematres_funder = authorities::tematres($funder["a"], $tematresUrl);
-            if (!empty($resultado_tematres_funder["found_term"])) {
-                $body["doc"]["funder"][$i_funder]["name"] = $resultado_tematres_funder["found_term"];
-                $body["doc"]["funder"][$i_funder]["location"] = $resultado_tematres_funder["country"];
-            } else {
-                $body["doc"]["funder"][$i_funder]["name"] = $resultado_tematres_funder["term_not_found"];
-            }
+            //$resultado_tematres_funder = authorities::tematres($funder["a"], $tematresUrl);
+            // if (!empty($resultado_tematres_funder["found_term"])) {
+            //     $body["doc"]["funder"][$i_funder]["name"] = $resultado_tematres_funder["found_term"];
+            //     $body["doc"]["funder"][$i_funder]["location"] = $resultado_tematres_funder["country"];
+            // } else {
+            //     $body["doc"]["funder"][$i_funder]["name"] = $resultado_tematres_funder["term_not_found"];
+            // }
+            $body["doc"]["funder"][$i_funder]["name"] = trim($funder["a"]);
             if (isset($funder["f"])) {
                 $body["doc"]["funder"][$i_funder]["projectNumber"][] = $funder["f"];
             }
