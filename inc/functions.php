@@ -238,11 +238,10 @@ class Record
 
     public function completeRecordMetadata($t, $url_base, $createFormDSpace = null)
     {
-        echo '<article class="uk-article">';
-        echo '<p class="uk-article-meta">';
-        echo '<a href="<?php echo $url_base ?>/result.php?filter[]=type:&quot;'.$this->type.'&quot;">'.$this->type.'</a> | <a href="<?php echo $url_base ?>/result.php?filter[]=type:&quot;'.$this->originalType.'&quot;">'.$this->originalType.'</a>';
-        echo '</p>';
-        echo '<h1 class="uk-article-title uk-margin-remove-top uk-link-reset" style="font-size:150%">'.$this->name.' ('.$this->datePublished.')</h1>';
+        echo '<div class="card">';
+        echo '<div class="card-body">';
+        echo '<h6 class="card-subtitle mb-2 mt-4 text-muted">'.$this->base.' | '.$this->type.'</h6>';
+        echo '<h2 class="card-title">'.$this->name.' ('.$this->datePublished.')</h2>';
         
 
         echo '<dl class="row">';
