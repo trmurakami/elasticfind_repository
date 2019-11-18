@@ -63,8 +63,10 @@ require 'inc/meta-header.php';
                 <select class="form-control" id="selectBase" name="filter[]">
                     <option disabled selected value><?php echo $t->gettext('Todas as bases'); ?></option>
                     <option value="base:&quot;Livros&quot;" style="color:#333"><?php echo $t->gettext('Livros'); ?></option>
+                    <option value="base:&quot;Partituras&quot;" style="color:#333"><?php echo $t->gettext('Partituras'); ?></option>
                     <option value="base:&quot;Produção científica&quot;" style="color:#333"><?php echo $t->gettext('Produção Científica'); ?></option>
                     <option value="base:&quot;Teses e dissertações&quot;" style="color:#333"><?php echo $t->gettext('Teses e Dissertações'); ?></option>
+                    <option value="base:&quot;Trabalhos acadêmicos&quot;" style="color:#333"><?php echo $t->gettext('Trabalhos acadêmicos'); ?></option>
                 </select>
             </div>                         
             <button type="submit" class="btn btn-primary mt-3"><?php echo $t->gettext('Pesquisar'); ?></button>
@@ -77,6 +79,7 @@ require 'inc/meta-header.php';
   <div class="container">
     <!-- Example row of columns -->
     <div class="row">
+    <!--
       <div class="col-md-4">
         <h2>Heading</h2>
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
@@ -87,6 +90,7 @@ require 'inc/meta-header.php';
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
         <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
       </div>
+    -->
       <div class="col-md-4">
         <h2>Bases</h2>
         <ul class="list-group">

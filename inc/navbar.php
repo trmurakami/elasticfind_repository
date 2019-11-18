@@ -12,10 +12,7 @@
             </li>
             <li class="nav-item">
             <a class="nav-link" href="#">Busca avançada</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#">Unidades USP</a>
-            </li>            
+            </li>     
 
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</a>
