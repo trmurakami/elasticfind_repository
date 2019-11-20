@@ -776,7 +776,7 @@ class Homepage
      *
      * @return array Last records
      */
-    static function getLastRecords()
+    static function getLastRecords($sortField = null)
     {
 
         global $client;
@@ -785,10 +785,18 @@ class Homepage
         $params["index"] = $index;
         $params["size"] = 0;
         $query["query"]["bool"]["must"]["query_string"]["query"] = "*";
-        $query["sort"]["_uid"]["unmapped_type"] = "long";
-        $query["sort"]["_uid"]["missing"] = "_last";
-        $query["sort"]["_uid"]["order"] = "desc";
-        $query["sort"]["_uid"]["mode"] = "max";         
+        if ($sortField != null) {
+            $query["sort"][$sortField]["unmapped_type"] = "long";
+            $query["sort"][$sortField]["missing"] = "_last";
+            $query["sort"][$sortField]["order"] = "desc";
+            $query["sort"][$sortField]["mode"] = "max";  
+        } else {
+            $query["sort"]["_uid"]["unmapped_type"] = "long";
+            $query["sort"]["_uid"]["missing"] = "_last";
+            $query["sort"]["_uid"]["order"] = "desc";
+            $query["sort"]["_uid"]["mode"] = "max";  
+        }
+       
         $params["body"] = $query; 
         $response = Elasticsearch::search(null, 10, $query);
 

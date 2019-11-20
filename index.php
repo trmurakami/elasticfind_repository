@@ -101,7 +101,7 @@ require 'inc/meta-header.php';
 
     <hr>
 
-    <?php Homepage::getLastRecords();?>
+    <?php Homepage::getLastRecords("_id");?>
 
   </div>
 
