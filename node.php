@@ -8,7 +8,7 @@ require 'inc/config.php';
 
 /* Citeproc-PHP*/
 require 'inc/citeproc-php/CiteProc.php';
-$csl_abnt = file_get_contents('../csl/ecausp-abnt.csl');
+$csl_abnt = file_get_contents('inc/citeproc-php/style/ecausp-abnt.csl');
 $lang = "br";
 $citeproc_abnt = new citeproc($csl_abnt, $lang, $csl_abnt);
 $mode = "reference";
