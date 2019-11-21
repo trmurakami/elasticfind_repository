@@ -569,7 +569,7 @@ class Record
         $citeproc_abnt = new CiteProc($style_abnt, "pt-BR");
         echo '<div class="card" id="citacao'.$record['_id'].'">';
         echo '<div class="card-body">';
-        echo '<h6 class="card-subtitle mb-2 mt-4 text-muted">A citação é gerada automaticamente e pode não estar totalmente de acordo com as normas</h6>'; 
+        echo '<div class="alert alert-danger" role="alert">A citação é gerada automaticamente e pode não estar totalmente de acordo com as normas</div>'; 
         echo '<p><strong>ABNT</strong></p><p class="card-text">';
         $data = Citation::citationQuery($record["_source"]);
         print_r($citeproc_abnt->render($data, "bibliography"));
