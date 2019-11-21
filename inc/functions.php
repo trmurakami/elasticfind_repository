@@ -567,18 +567,14 @@ class Record
         /* Citeproc-PHP*/      
         
         $citeproc_abnt = new CiteProc($style_abnt, "pt-BR");
-        echo '<div id="citacao'.$record['_id'].'" >';
-            echo '<li class="uk-h6 uk-margin-top">';
-                echo '<div class="uk-alert-danger" uk-alert>A citação é gerada automaticamente e pode não estar totalmente de acordo com as normas</div>';
-                echo '<ul>';
-                    echo '<li class="uk-margin-top">';
-                    echo '<p><strong>ABNT</strong></p>';
-                    $data = Citation::citationQuery($record["_source"]);
-                    print_r($citeproc_abnt->render($data, "bibliography"));
-                    echo '</li>';
-                echo '</ul>';
-            echo '</li>';
-        echo '</div>';
+        echo '<div class="card" id="citacao'.$record['_id'].'">';
+        echo '<div class="card-body">';
+        echo '<h6 class="card-subtitle mb-2 mt-4 text-muted">A citação é gerada automaticamente e pode não estar totalmente de acordo com as normas</h6>'; 
+        echo '<p><strong>ABNT</strong></p><p class="card-text">';
+        $data = Citation::citationQuery($record["_source"]);
+        print_r($citeproc_abnt->render($data, "bibliography"));
+        echo '</p>';
+        echo '</div></div>';
     }
 }
 
