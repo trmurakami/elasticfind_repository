@@ -236,7 +236,7 @@ class Record
 
     }
 
-    public function completeRecordMetadata($t, $url_base, $createFormDSpace = null)
+    public function completeRecordMetadata($t, $url_base, $style_abnt = null)
     {
         echo '<div class="card">';
         echo '<div class="card-body">';
@@ -512,7 +512,10 @@ class Record
         echo '</div>';   
 
 
-        $this->citation($t, $this->completeRecord);
+        if (!is_null($style_abnt)) {
+            $this->citation($t, $this->completeRecord, $style_abnt);
+        }
+        
 
     }
 
@@ -597,20 +600,11 @@ class Record
         }
     }
 
-    function citation($t, $record)
+    function citation($t, $record, $style_abnt)
     {
-        /* Citeproc-PHP*/
-
-        global $style_abnt;
-        global $style_apa;
-        global $style_nlm;
-        global $style_vancouver;
-        
+        /* Citeproc-PHP*/      
         
         $citeproc_abnt = new CiteProc($style_abnt, "pt-BR");
-        $citeproc_apa = new CiteProc($style_apa, "en-US");
-        $citeproc_nlm = new CiteProc($style_nlm, "en-US");
-        $citeproc_vancouver = new CiteProc($style_vancouver, "en-US");
         echo '<div id="citacao'.$record['_id'].'" >';
             echo '<li class="uk-h6 uk-margin-top">';
                 echo '<div class="uk-alert-danger" uk-alert>A citação é gerada automaticamente e pode não estar totalmente de acordo com as normas</div>';
@@ -619,18 +613,6 @@ class Record
                     echo '<p><strong>ABNT</strong></p>';
                     $data = Citation::citationQuery($record["_source"]);
                     print_r($citeproc_abnt->render($data, "bibliography"));
-                    echo '</li>';
-                    echo '<li class="uk-margin-top">';
-                    echo '<p><strong>APA</strong></p>';
-                    print_r($citeproc_apa->render($data, "bibliography"));
-                    echo '</li>';
-                    echo '<li class="uk-margin-top">';
-                    echo '<p><strong>NLM</strong></p>';
-                    print_r($citeproc_nlm->render($data, "bibliography"));
-                    echo '</li>';
-                    echo '<li class="uk-margin-top">';
-                    echo '<p><strong>Vancouver</strong></p>';
-                    print_r($citeproc_vancouver->render($data, "bibliography"));
                     echo '</li>';
                 echo '</ul>';
             echo '</li>';

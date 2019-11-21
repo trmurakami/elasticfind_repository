@@ -6,6 +6,14 @@
 require 'inc/config.php';
 
 
+/* Citeproc-PHP*/
+require 'inc/citeproc-php/CiteProc.php';
+$csl_abnt = file_get_contents('../csl/ecausp-abnt.csl');
+$lang = "br";
+$citeproc_abnt = new citeproc($csl_abnt, $lang, $csl_abnt);
+$mode = "reference";
+
+
 /* QUERY */
 $cursor = Elasticsearch::get($_GET['_id'], null);
 
@@ -42,7 +50,7 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
 
                         <?php
                         $record = new Record($cursor, $show_metrics);
-                        $record->completeRecordMetadata($t, $url_base, $createFormDSpace);
+                        $record->completeRecordMetadata($t, $url_base, $csl_abnt);
                         ?>
 
                         </div>
