@@ -9,8 +9,9 @@ require 'inc/config.php';
 /* Citeproc-PHP*/
 require 'inc/citeproc-php/CiteProc.php';
 $csl_abnt = file_get_contents('inc/citeproc-php/style/ecausp-abnt.csl');
-$lang = "br";
-$citeproc_abnt = new citeproc($csl_abnt, $lang, $csl_abnt);
+//$csl_abnt = file_get_contents('inc/citeproc-php/style/ufrgs.csl');
+$lang = "pt-BR";
+$citeproc_abnt = new citeproc($csl_abnt, $lang);
 $mode = "reference";
 
 
@@ -51,13 +52,13 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
                         <?php
                         $record = new Record($cursor, $show_metrics);
                         $record->completeRecordMetadata($t, $url_base, $csl_abnt);
-                        ?>
+                        ?>                   
 
                         </div>
                         <div class="col-4">  
 
                         <div class="uk-card uk-card-body">
-                            <h5 class="uk-panel-title">Ver registro no DEDALUS</h5>
+                            <h5 class="uk-panel-title mt-5">Ver registro no DEDALUS</h5>
                             <ul class="uk-nav uk-margin-top uk-margin-bottom">
                                 <hr>
                                 <li>

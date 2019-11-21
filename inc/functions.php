@@ -158,7 +158,7 @@ class Record
         }
         if (isset($record["_source"]["USP"]["fullTextFiles"])) {
             $this->bitstreamArray = $record["_source"]["USP"]["fullTextFiles"];
-        }       
+        }
         $this->completeRecord = $record;
         $this->showMetrics = $showMetrics;
     }
@@ -244,7 +244,7 @@ class Record
         echo '<h2 class="card-title">'.$this->name.' ('.$this->datePublished.')</h2>';
         
 
-        echo '<dl class="row">';
+        //echo '<p class="card-text">';
         /* Authors */
         foreach ($this->authorArray as $authors) {
             if (!empty($authors["person"]["orcid"])) {
@@ -261,55 +261,19 @@ class Record
             }
             unset($orcidLink);
         }
-        echo '<dt class="col-sm-2">'.$t->gettext('Autor(es)').'</dt><dd class="col-sm-10">'.implode("; ", $authorsList).'</dd>';
+        echo '<p class="card-text"><b>'.$t->gettext('Autor(es)').':</b> '.implode("; ", $authorsList).'</p>';
         
-
-        echo '<div class="uk-grid" data-ukgrid>';
-        echo '<div class="uk-width-1-3@m">';
-
-        if (!empty($this->bitstreamArray)) { 
-            echo '<div class="uk-alert-primary" uk-alert>
-            <h4>'.$t->gettext('Download na BDPI').'</h4>
-            <ul class="uk-list uk-list-striped">
-            ';
-
-            
-
-            foreach ($this->bitstreamArray as $key => $value) {
-                echo ' 
-                <li>
-                <a class="uk-link-toggle" href="https://'.$_SERVER["SERVER_NAME"].'/bitstreams/'.$value["uuid"].'" target="_blank" rel="noopener noreferrer nofollow">
-                <div uk-grid>
-                    <div class="uk-width-auto"><img data-src="'.$url_base.'/inc/images/pdf.png" width="50" height="50" alt="PDF" uk-img></div>
-                    <div class="uk-width-expand"><b>Nome:</b> '.$value["name"].'<br/><b>Tamanho:</b> '.$value["sizeBytes"].'</div>
-                </div>
-                </a>
-                </li>';
-            }
-
-            echo '</dl></div>';
-        }
-
-        
-        if (!empty($createFormDSpace)) {
-            $this->itemsDSpace($createFormDSpace, $t);
-        }
-
-        if (!empty($this->url)||!empty($this->doi)) {
-            $this->onlineAccess($t);
-        }          
-
-        echo '</div>';
-        echo '<div>';
-
-        echo '<dl class="row">';
+        // if (!empty($this->url)||!empty($this->doi)) {
+        //     $this->onlineAccess($t);
+        // }          
 
         /* Abstract */
         if (!empty($this->descriptionArray)) {
-            echo '<dt class="col-sm-3">'.$t->gettext('Resumo').': </dt>';
+            echo '<p class="card-text"><b>'.$t->gettext('Resumo').':</b> ';
             foreach ($this->descriptionArray as $resumo) {
-                echo '<dd class="col-sm-9">'.$resumo.'</dd>';
+                echo ''.$resumo.'';
             }
+            echo '</p>';
         }        
         
         /* USP Units */
@@ -318,7 +282,7 @@ class Record
                 $unidadeUSPList[] = '<a href="'.$url_base.'/result.php?filter[]=unidadeUSP:&quot;'.$unidadeUSP.'&quot;">'.$unidadeUSP.'</a>';
             }
             $unidadeUSPListUnique = array_unique($unidadeUSPList);
-            echo '<dt class="col-sm-3">'.$t->gettext('Unidades USP').'</dt><dd class="col-sm-9">'.implode("; ", $unidadeUSPListUnique).'</dd>';
+            echo '<p class="card-text"><b>'.$t->gettext('Unidades USP').':</b> '.implode("; ", $unidadeUSPListUnique).'</p>';
         }
         
         /* Programa Sigla Pós */
@@ -330,7 +294,7 @@ class Record
         
         /* DOI */
         if (!empty($this->doi)) {
-            echo '<dt class="col-sm-3">DOI</dt><dd class="col-sm-9"><a href="https://doi.org/'.$this->doi.'" target="_blank" rel="noopener noreferrer">'.$this->doi.'</a></dd>';
+            echo '<p class="card-text"><b>DOI:</b> <a href="https://doi.org/'.$this->doi.'" target="_blank" rel="noopener noreferrer">'.$this->doi.'</a></p>';
         }
 
         /* DOI */
@@ -345,7 +309,7 @@ class Record
             foreach ($this->aboutArray as $subject) {
                 $subjectList[] = '<a href="'.$url_base.'/result.php?filter[]=about:&quot;'.$subject.'&quot;">'.$subject.'</a>';
             }
-            echo '<dt class="col-sm-3">'.$t->gettext('Assuntos').'</dt><dd class="col-sm-9">'.implode("; ", $subjectList).'</dd>';
+            echo '<p class="card-text"><b>'.$t->gettext('Assuntos').':</b> '.implode("; ", $subjectList).'</p>';
         }
             
         /* BDTD Subject */
@@ -353,7 +317,7 @@ class Record
             foreach ($this->aboutBDTDArray as $subject_BDTD) {
                 $subjectBDTDList[] = '<a href="'.$url_base.'/result.php?filter[]=USP.about_BDTD:&quot;'.$subject_BDTD.'&quot;">'.$subject_BDTD.'</a>';
             }
-            echo '<dt class="col-sm-3">'.$t->gettext('Palavras-chave do autor').'</dt><dd class="col-sm-9">'.implode("; ", $subjectBDTDList).'</dd>';
+            echo '<p class="card-text"><b>'.$t->gettext('Palavras-chave do autor').':</b> '.implode("; ", $subjectBDTDList).'</p>';
         }
         
         /* Funder */
@@ -407,43 +371,41 @@ class Record
 
         /* Source */
         if (!empty($this->isPartOfArray)) {
-            echo '<dt class="col-sm-3">'.$t->gettext('Fonte').'</dt><dd class="col-sm-9"><dl class="row">';
+            echo '<p class="card-text"><b>'.$t->gettext('Fonte').':</b></p> ';
             if (!empty($this->isPartOfArray["name"])) {
-                    echo '<dt class="col-sm-4">Título do periódico</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=isPartOf.name:&quot;'.$this->isPartOfArray["name"].'&quot;">'.$this->isPartOfArray["name"].'</a></dd>';
+                    echo '<p class="card-text ml-4"><b>Título do periódico:</b> <a href="'.$url_base.'/result.php?filter[]=isPartOf.name:&quot;'.$this->isPartOfArray["name"].'&quot;">'.$this->isPartOfArray["name"].'</a></p>';
             }
             if (!empty($this->isPartOfArray['issn'][0])) {
-                echo '<dt class="col-sm-4">ISSN</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=issn:&quot;'.$this->isPartOfArray['issn'][0].'&quot;">'.$this->isPartOfArray['issn'][0].'</a></dd>';
+                echo '<p class="card-text ml-4"><b>ISSN:</b> <a href="'.$url_base.'/result.php?filter[]=issn:&quot;'.$this->isPartOfArray['issn'][0].'&quot;">'.$this->isPartOfArray['issn'][0].'</a></p>';
             }
             if (!empty($this->isPartOfArray["USP"]["dados_do_periodico"])) {
-                echo '<dt class="col-sm-4">Volume/Número/Paginação/Ano</dt><dd class="col-sm-8">'.$this->isPartOfArray["USP"]["dados_do_periodico"].'</dd>';
+                echo '<p class="card-text ml-4"><b>Volume/Número/Paginação/Ano:</b> '.$this->isPartOfArray["USP"]["dados_do_periodico"].'</p>';
             }
-            echo '</dl></dd>';
         }
 
         /*  releasedEvent */
         if (!empty($this->releasedEvent)) {
-            echo '<dt class="col-sm-3">'.$t->gettext('Nome do evento').'</dt><dd class="col-sm-9"><a href="'.$url_base.'/result.php?filter[]=releasedEvent:&quot;'.$this->releasedEvent.'&quot;">'.$this->releasedEvent.'</a></dd>';
+            echo '<p class="card-text"><b>'.$t->gettext('Nome do evento').':</b> <a href="'.$url_base.'/result.php?filter[]=releasedEvent:&quot;'.$this->releasedEvent.'&quot;">'.$this->releasedEvent.'</a></p>';
         }          
 
         /* Language */
         foreach ($this->languageArray as $language) {
             $languageList[] = '<a href="'.$url_base.'/result.php?filter[]=language:&quot;'.$language.'&quot;">'.$language.'</a>';
         }
-        echo '<dt class="col-sm-3">'.$t->gettext('Idioma').'</dt><dd class="col-sm-9">'.implode("; ", $languageList).'</dd>';
+        echo '<p class="card-text"><b>'.$t->gettext('Idioma').':</b> '.implode("; ", $languageList).'</p>';
         
         /* Imprint */
         if (!empty($this->publisherArray)) {
-            echo '<dt class="col-sm-3">'.$t->gettext('Imprenta').'</dt><dd class="col-sm-9"><dl class="row">';
+            echo '<p class="card-text"><b>'.$t->gettext('Imprenta').':</b></p>';
             if (!empty($this->publisherArray["organization"]["name"])) {
-                echo '<dt class="col-sm-4">'.$t->gettext('Editora').'</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=publisher.organization.name:&quot;'.$this->publisherArray["organization"]["name"].'&quot;">'.$this->publisherArray["organization"]["name"].'</a></dd>';
+                echo '<p class="card-text ml-4"><b>'.$t->gettext('Editora').':</b> <a href="'.$url_base.'/result.php?filter[]=publisher.organization.name:&quot;'.$this->publisherArray["organization"]["name"].'&quot;">'.$this->publisherArray["organization"]["name"].'</a></p>';
             }
             if (!empty($this->publisherArray["organization"]["location"])) {
-                echo '<dt class="col-sm-4">'.$t->gettext('Local').'</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=publisher.organization.location:&quot;'.$this->publisherArray["organization"]["location"].'&quot;">'.$this->publisherArray["organization"]["location"].'</a></dd>';
+                echo '<p class="card-text ml-4"><b>'.$t->gettext('Local').':</b> <a href="'.$url_base.'/result.php?filter[]=publisher.organization.location:&quot;'.$this->publisherArray["organization"]["location"].'&quot;">'.$this->publisherArray["organization"]["location"].'</a></p>';
             }
             if (!empty($this->datePublished)) {
-                echo '<dt class="col-sm-4">'.$t->gettext('Data de publicação').'</dt><dd class="col-sm-8"><a href="'.$url_base.'/result.php?filter[]=datePublished:&quot;'.$this->datePublished.'&quot;">'.$this->datePublished.'</a></dd>';
+                echo '<p class="card-text ml-4"><b>'.$t->gettext('Data de publicação').':</b> <a href="'.$url_base.'/result.php?filter[]=datePublished:&quot;'.$this->datePublished.'&quot;">'.$this->datePublished.'</a></p>';
             }
-            echo '</dl></dd>';
         }
         if (isset($_SESSION['oauthuserdata'])) {
             if ($this->crossrefArray > 0) {
@@ -503,9 +465,9 @@ class Record
         /* USP Authors */
         if (!empty($this->authorUSPArray)) {
             foreach ($this->authorUSPArray as $autoresUSP) {
-                $authorsUSPList[] = '<dd class="col-sm-12"><a href="'.$url_base.'/result.php?filter[]=authorUSP.name:&quot;'.$autoresUSP["name"].'&quot;">'.$autoresUSP["name"].' - '.$autoresUSP["unidadeUSP"].' </a></dd>';
+                $authorsUSPList[] = '<a href="'.$url_base.'/result.php?filter[]=authorUSP.name:&quot;'.$autoresUSP["name"].'&quot;">'.$autoresUSP["name"].' - '.$autoresUSP["unidadeUSP"].' </a>';
             }
-            echo '<dt class="col-sm-3">'.$t->gettext('Autores USP').'</dt><dd class="col-sm-9"><dl class="row">'.implode("", $authorsUSPList).'</dl></dd>';
+            echo '<p class="card-text"><b>'.$t->gettext('Autores USP').':</b> '.implode("; ", $authorsUSPList).'</p>';
         }        
 
         echo '</div>';
