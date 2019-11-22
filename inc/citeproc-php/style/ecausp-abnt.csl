@@ -89,7 +89,6 @@
       <label form="short" prefix=" (" suffix=".)" text-case="uppercase"/>
       <substitute>
         <names variable="editor"/>
-        <names variable="translator"/>
         <text macro="title"/>
       </substitute>
     </names>
@@ -102,7 +101,6 @@
       </name>
       <substitute>
         <names variable="editor"/>
-        <names variable="translator"/>
         <choose>
           <if type="book">
             <text variable="title" form="short"/>
@@ -374,7 +372,6 @@
           <group>
             <text macro="author" suffix=". "/>
             <text macro="title" suffix=". "/>
-            <text macro="translator" suffix=". "/>
             <text macro="edition" suffix=". "/>
             <text macro="publisher" suffix=". "/>
             <text macro="locators"/>
@@ -389,7 +386,6 @@
             <text macro="container-contributors" suffix=". "/>
             <text macro="container-title" suffix=". "/>
             <text variable="collection-title"/>
-            <text macro="translator" suffix=". "/>
             <text macro="edition" suffix=". "/>
             <text macro="publisher" suffix=". "/>
             <text macro="locators" suffix=". "/>
