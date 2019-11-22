@@ -508,6 +508,7 @@
             <text macro="event"/>
           </group>
           <text macro="publisher"/>
+          <text variable="page" prefix=" p. " suffix="."/>
           <text macro="access"/>
         </else-if>
         <else-if type="legislation legal_case" match="any">
