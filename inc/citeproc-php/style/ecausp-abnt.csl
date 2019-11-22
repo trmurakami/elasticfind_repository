@@ -112,6 +112,14 @@
       </substitute>
     </names>
   </macro>
+ <macro name="director">
+    <names variable="author">
+      <name sort-separator=", " initialize-with=". " delimiter="; " delimiter-precedes-last="always">
+        <name-part name="given" text-case="capitalize-first"/>
+        <name-part name="family" text-case="capitalize-first"/>        
+      </name>
+    </names>
+  </macro>  
   <macro name="access">
     <text variable="DOI" prefix=" DOI: " suffix="."/>
     <text variable="URL" prefix=" Disponível em: " suffix="."/>
@@ -132,6 +140,9 @@
       <else-if type="dataset" match="any">
         <text variable="title" suffix=". "/>
       </else-if>
+      <else-if type="broadcast motion_picture" match="any">
+        <text variable="title" text-case="uppercase"/>
+      </else-if>      
       <else>
         <text variable="title" font-weight="bold"/>
       </else>
@@ -525,9 +536,10 @@
           <group>
             <text macro="title"/>
             <text value="Direção" text-case="capitalize-first" prefix=". " suffix=": "/>
-            <text macro="author" suffix=". "/>
+            <text macro="director" suffix=". "/>
             <text macro="publisher"/>
             <text variable="medium"/>
+            <text macro="access"/>
           </group>
         </else-if>
         <else-if type="dataset" match="any">
@@ -536,7 +548,7 @@
             <text macro="title" suffix=". "/>
             <text variable="version" prefix=". "/>
             <text macro="publisher"/>
-            <text variable="medium"/>
+            <text variable="medium"/>            
             <text macro="access"/>
           </group>
         </else-if>
