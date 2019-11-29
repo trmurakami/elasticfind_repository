@@ -78,7 +78,7 @@ $cursor = $client->search($params);
             <div class="row">
                 <div class="col-8">                
                     <!-- PAGINATION -->
-                    <?php UI::pagination($page, $total, $limit, $t); ?>
+                    <?php UI::pagination($page, $total, $limit); ?>
                     <!-- /PAGINATION --> 
                     <br/>  
 
@@ -95,7 +95,7 @@ $cursor = $client->search($params);
 
                     <br/>
                     <!-- PAGINATION -->
-                    <?php UI::pagination($page, $total, $limit, $t); ?>
+                    <?php UI::pagination($page, $total, $limit); ?>
                     <!-- /PAGINATION -->                                 
                 
                 </div>
