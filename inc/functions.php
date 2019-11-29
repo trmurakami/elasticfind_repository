@@ -192,14 +192,15 @@ class Record
             echo '</small></p>';
         }
 
-        echo '<p class="card-text m-0"><small class="text-dark">Unidades USP: ';
+       
         if (!empty($this->unidadeUSPArray)) {
+            echo '<p class="card-text m-0"><small class="text-dark">Unidades USP: ';
             $unique =  array_unique($this->unidadeUSPArray);
             foreach ($unique as $unidadeUSP) {
                 echo '<a class="text-muted" href="result.php?filter[]=unidadeUSP:&quot;'.$unidadeUSP.'&quot;">'.$unidadeUSP.' </a>';
             }
-        }
-        echo '</small></p>';        
+            echo '</small></p>';
+        }               
 
         /* IsPartOf */
         if (!empty($this->isPartOfArray["name"])) {
