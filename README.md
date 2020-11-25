@@ -15,3 +15,17 @@ sudo apt-get install php-intl
     AllowOverride All
     Require all granted
 </Directory>
+
+## Install
+
+curl -s http://getcomposer.org/installer | php
+
+php composer.phar install --no-dev
+
+git submodule init
+
+git submodule update
+
+## Config file: inc/config.php
+
+Edit config.php
