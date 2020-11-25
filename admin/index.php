@@ -5,7 +5,8 @@
             getcwd();
             chdir('../');
             // Include essencial files
-            require 'inc/config.php'; 
+            require 'inc/config.php';
+            require 'inc/functions.php'; 
             require 'inc/meta-header.php';
 
             /* Get number of records with doi */
