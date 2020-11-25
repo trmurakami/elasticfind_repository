@@ -174,6 +174,24 @@
         <p><a href="translate_en.php">Atualizar tradução para o Inglês - Converte o arquivo messages.po para o en.php</a></p>
 
 
+        <h4>Upload de arquivo CSV</h4>
+
+        <form class="m-3" action="import_csv.php" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+            <legend>Enviar um arquivo CSV (UTF-8, separado por tabulações)</legend>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">CSV</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="fileXML" aria-describedby="fileXML" name="file">
+                    <label class="custom-file-label" for="fileXML">Escolha o arquivo</label>
+                </div>
+                <input type="text" placeholder="TAG para formar um grupo" class="form-control" name="tag">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Upload</button>
+                </div>    
+            </div>  
+        </form>
 
 
         <?php if(!empty($_SESSION['oauthuserdata'])) : ?>
