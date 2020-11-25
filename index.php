@@ -16,10 +16,6 @@ require 'inc/meta-header.php';
 
     <link rel="canonical" href="">
 
-    <!-- Bootstrap core CSS -->
-    <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
     <style>
         .bd-placeholder-img {
         font-size: 1.125rem;
@@ -80,7 +76,7 @@ require 'inc/meta-header.php';
   <div class="container">
     <!-- Example row of columns -->
     <div class="row">
-    <!--
+    
       <div class="col-md-4">
         <h2>Heading</h2>
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
@@ -91,7 +87,7 @@ require 'inc/meta-header.php';
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
         <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
       </div>
-    -->
+    
       <div class="col-md-4">
         <h2>Bases</h2>
         <ul class="list-group">

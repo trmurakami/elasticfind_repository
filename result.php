@@ -6,9 +6,9 @@
  * The page for display results of search.
  *
  * @category Search
- * @package  Uspfind
- * @author   Tiago Murakami <tiago.murakami@dt.sibi.usp.br>
- * @link     https://github.com/SIBiUSP/uspfind
+ * @package  Elasticfind Repository
+ * @author   Tiago Murakami <trmurakami@usp.br>
+ * @link     https://github.com/trmurakami/elasticfind_repository
  */
 
 require 'inc/config.php';
