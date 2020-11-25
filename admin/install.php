@@ -1,6 +1,7 @@
 <?php 
 
-require ('../inc/config.php'); 
+require ('../inc/config.php');
+require ('../inc/functions.php'); 
 
 /* Connect to Elasticsearch */
 try {

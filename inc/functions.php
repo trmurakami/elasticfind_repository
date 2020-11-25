@@ -26,17 +26,18 @@ if (file_exists('elasticfind/elasticfind.php')) {
 /* Definição de idioma */
 if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
     if (empty($_SESSION['localeToUse'])) {
-        $_SESSION['localeToUse'] = Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        //$_SESSION['localeToUse'] = Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
     }
 }
 else {
     if (empty($_SESSION['localeToUse'])) {
-        $_SESSION['localeToUse'] = Locale::getDefault();
+        //$_SESSION['localeToUse'] = Locale::getDefault();
     }
 }
 if (!empty($_GET['locale'])) {
     $_SESSION['localeToUse'] = $_GET["locale"];
-} 
+}
+$_SESSION['localeToUse'] = "pt_BR"; 
 
 
 use Gettext\Translator;

@@ -12,6 +12,7 @@
  */
 
 require 'inc/config.php';
+require 'inc/functions.php';
 
 
 if (isset($fields)) {
