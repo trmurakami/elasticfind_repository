@@ -66,15 +66,17 @@ require 'inc/meta-header.php';
     <div class="row">
     
       <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <h2>E-books de editoras universitárias</h2>
+        <p>Esta base foi baseada no documento: E-books de editoras universitárias, elaborado pelo BU/UFSC em parceria com o SiBI/UFRJ. E disponibilizado no Google Docs.</p>
+        <p><a class="btn btn-secondary" href="https://docs.google.com/spreadsheets/d/1HVsq2WU-_uvqPPOwoQgZIPB9Mbh4eFkDOHxQO4Dp6fE/edit#gid=0" role="button" target="_blank">Acessar o link no Google Docs &raquo;</a></p>
       </div>
+      <!--
       <div class="col-md-4">
         <h2>Heading</h2>
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
         <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
       </div>
+      -->
     
       <div class="col-md-4">
         <h2>Bases</h2>
