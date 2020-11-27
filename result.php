@@ -88,9 +88,9 @@ $get_data = $_GET;
                                 
                             </form>
                         </div>
-                        <br/><br/>                        
+                        <br/><br/>
                     
-                    <?php endif; ?>                       
+                    <?php endif; ?>
 
                     <?php foreach ($cursor["hits"]["hits"] as $r) : ?>
 
@@ -212,6 +212,7 @@ $get_data = $_GET;
                     
                     $facets->facet(basename(__FILE__), "trabalhoEmEventos.classificacaoDoEvento", 100, "Classificação do evento", null, "_term", $_GET); 
                     $facets->facet(basename(__FILE__), "EducationEvent.name", 100, "Nome do evento", null, "_term", $_GET);
+                    $facets->facet(basename(__FILE__), "publisher.organization.name", 100, "Editora", null, "_term", $_GET);
                     $facets->facet(basename(__FILE__), "publisher.organization.location", 100, "Cidade", null, "_term", $_GET);
                     $facets->facet(basename(__FILE__), "trabalhoEmEventos.anoDeRealizacao", 100, "Ano de realização do evento", null, "_term", $_GET);
                     $facets->facet(basename(__FILE__), "trabalhoEmEventos.tituloDosAnaisOuProceedings", 100, "Título dos anais", null, "_term", $_GET);
