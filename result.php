@@ -103,17 +103,11 @@ $get_data = $_GET;
                         <div class="card">
                             <div class="card-body">
 
-                                <h6 class="card-subtitle mb-2 text-muted"><?php echo $r["_source"]['base'];?> | <?php echo $r["_source"]['type'];?></h6>
-                                <h5 class="card-title text-dark"><?php echo $r["_source"]['name']; ?> (<?php echo $r["_source"]['datePublished'];?>)</h5>
-
-
-                                <?php
-                                    if (!empty($r["_source"]["concluido"])) {
-                                        $r["_source"]["concluido"] == "Sim" ? print_r('<span class="badge badge-warning">Concluído</span>') : false;
-                                    }
-                                ?>
-
-                                <p class="text-muted"><b>Autores:</b>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="card-subtitle mb-2 text-muted"><?php echo $r["_source"]['base'];?> | <?php echo $r["_source"]['type'];?></h6>
+                                    <h5 class="card-title text-dark"><?php echo $r["_source"]['name']; ?> (<?php echo $r["_source"]['datePublished'];?>)</h5>
+                                    <p class="text-muted"><b>Autores:</b>
                                     <?php if (!empty($r["_source"]['author'])) : ?>
                                         <?php foreach ($r["_source"]['author'] as $autores) {
                                             $authors_array[]='<a href="result.php?filter[]=author.person.name:&quot;'.$autores["person"]["name"].'&quot;">'.$autores["person"]["name"].'</a>';
@@ -123,36 +117,55 @@ $get_data = $_GET;
                                         print_r($array_aut);
                                         ?>
                                     <?php endif; ?>
-                                </p>
-                                
-   
-                                <?php if (!empty($r["_source"]['isPartOf']['name'])) : ?>
+                                    </p>
+                                    <?php if (!empty($r["_source"]['isPartOf']['name'])) : ?>
                                     <p class="text-muted"><b>In:</b> <a href="result.php?filter[]=isPartOf.name:&quot;<?php echo $r["_source"]['isPartOf']['name'];?>&quot;"><?php echo $r["_source"]['isPartOf']['name'];?></a></p>
-                                <?php endif; ?>
-                                <?php if (!empty($r["_source"]['isPartOf']['issn'])) : ?>
-                                    <p class="text-muted"><b>ISSN:</b> <a href="result.php?filter[]=isPartOf.issn:&quot;<?php echo $r["_source"]['isPartOf']['issn'];?>&quot;"><?php echo $r["_source"]['isPartOf']['issn'];?></a></li>                                        
-                                <?php endif; ?>
-                                <?php if (!empty($r["_source"]['isbn'])) : ?>
-                                    <p class="text-muted"><b>ISBN:</b> <a href="result.php?filter[]=isbn:&quot;<?php echo $r["_source"]['isbn'];?>&quot;"><?php echo $r["_source"]['isbn'];?></a></li>
-                                <?php endif; ?>
-                                <?php if (!empty($r["_source"]['EducationEvent']['name'])) : ?>
-                                    <p class="text-muted"><b>Nome do evento:</b> <?php echo $r["_source"]['EducationEvent']['name'];?></p>
-                                <?php endif; ?>
-                                <?php if (!empty($r["_source"]['doi'])) : ?>
-                                    <p class="text-muted"><b>DOI:</b>    <a href="https://doi.org/<?php echo $r["_source"]['doi'];?>"><span id="<?php echo $r['_id'] ?>"><?php echo $r["_source"]['doi'];?></span></a> <button class="btn btn-info" onclick="copyToClipboard('#<?=$r['_id']?>')">Copiar DOI</button> <a class="btn btn-warning" href="doi_to_elastic.php?doi=<?php echo $r['_source']['doi'];?>&tag=<?php echo $r['_source']['tag'][0];?>">Coletar dados da Crossref</a></p>                                        
-                                <?php endif; ?>
+                                    <?php endif; ?>
+                                    <?php if (!empty($r["_source"]['isPartOf']['issn'])) : ?>
+                                        <p class="text-muted"><b>ISSN:</b> <a href="result.php?filter[]=isPartOf.issn:&quot;<?php echo $r["_source"]['isPartOf']['issn'];?>&quot;"><?php echo $r["_source"]['isPartOf']['issn'];?></a></li>                                        
+                                    <?php endif; ?>
+                                    <?php if (!empty($r["_source"]['isbn'])) : ?>
+                                        <p class="text-muted"><b>ISBN:</b> <a href="result.php?filter[]=isbn:&quot;<?php echo $r["_source"]['isbn'];?>&quot;"><?php echo $r["_source"]['isbn'];?></a></li>
+                                    <?php endif; ?>
+                                    <?php if (!empty($r["_source"]['EducationEvent']['name'])) : ?>
+                                        <p class="text-muted"><b>Nome do evento:</b> <?php echo $r["_source"]['EducationEvent']['name'];?></p>
+                                    <?php endif; ?>
+                                    <?php if (!empty($r["_source"]['doi'])) : ?>
+                                        <p class="text-muted"><b>DOI:</b>    <a href="https://doi.org/<?php echo $r["_source"]['doi'];?>"><span id="<?php echo $r['_id'] ?>"><?php echo $r["_source"]['doi'];?></span></a> <button class="btn btn-info" onclick="copyToClipboard('#<?=$r['_id']?>')">Copiar DOI</button> <a class="btn btn-warning" href="doi_to_elastic.php?doi=<?php echo $r['_source']['doi'];?>&tag=<?php echo $r['_source']['tag'][0];?>">Coletar dados da Crossref</a></p>                                        
+                                    <?php endif; ?>
 
-                                <?php if (!empty($r["_source"]['url'])) : ?>
-                                    <p class="text-muted"><b>URL:</b> <a href="<?php echo str_replace("]", "", str_replace("[", "", $r["_source"]['url'])); ?>"><?php echo str_replace("]", "", str_replace("[", "", $r["_source"]['url']));?></a></p>
-                                <?php endif; ?>
-                                <?php if (!empty($r["_source"]['ExternalData']['crossref']['message']['is-referenced-by-count'])) : ?>
-                                    <p class="text-muted"><b>Citações na Crossref:</b> <?php echo $r["_source"]['ExternalData']['crossref']['message']['is-referenced-by-count'];?></p>
-                                <?php endif; ?>
-                                <?php if (!empty($r["_source"]['ids_match'])) : ?>  
-                                    <?php foreach ($r["_source"]['ids_match'] as $id_match) : ?>
-                                        <?php compararRegistros::match_id($id_match["id_match"], $id_match["nota"]);?>
-                                    <?php endforeach;?>
-                                <?php endif; ?>
+                                    <?php if (!empty($r["_source"]['url'])) : ?>
+                                        <p class="text-muted"><b>URL:</b> <a href="<?php echo str_replace("]", "", str_replace("[", "", $r["_source"]['url'])); ?>"><?php echo str_replace("]", "", str_replace("[", "", $r["_source"]['url']));?></a></p>
+                                    <?php endif; ?>
+                                    <?php if (!empty($r["_source"]['ExternalData']['crossref']['message']['is-referenced-by-count'])) : ?>
+                                        <p class="text-muted"><b>Citações na Crossref:</b> <?php echo $r["_source"]['ExternalData']['crossref']['message']['is-referenced-by-count'];?></p>
+                                    <?php endif; ?>
+                                    <?php if (!empty($r["_source"]['ids_match'])) : ?>  
+                                        <?php foreach ($r["_source"]['ids_match'] as $id_match) : ?>
+                                            <?php compararRegistros::match_id($id_match["id_match"], $id_match["nota"]);?>
+                                        <?php endforeach;?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="col-md-auto">
+                                    <?php
+                                        if (!empty($r["_source"]['isbn'])) {
+                                            if (!empty($r["_source"]['isbn'])) {
+                                                $file = 'inc/images/covers/'.$r["_source"]['isbn'].'.jpg';
+                                            } else {
+                                                $file = "";
+                                            }
+                                            if (file_exists($file)) {
+                                                echo '<div class="card" style="width: 18rem;">
+                                                <img class="card-img-top" src="'.$file.'" alt="Book Cover">
+                                            </div>';
+                                            } else {
+                                                echo '<img class="card-img" src="http://covers.openlibrary.org/b/isbn/'.$r["_source"]['isbn'].'-S.jpg" width="60" height="60" alt="Book Cover">';
+                                            }
+                                        }
+                                    ?>
+                                </div>
+                            </div>
+
                             </div>
                         </div>
                         <?php endforeach;?>
