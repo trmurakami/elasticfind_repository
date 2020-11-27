@@ -87,7 +87,8 @@ require 'inc/meta-header.php';
     </div>
 
     <hr>
-
+    <h3>Últimos registros</h3>
+    <br/>
     <?php Homepage::getLastRecords("_id");?>
 
   </div>
