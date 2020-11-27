@@ -54,10 +54,11 @@ class CSVRecord
     {
         foreach ($row as $key => $value) {
             if ($header[$key] == "about") {
-                $value = explode(",", $value);
+                $value = explode("|", $value);
+                $value = array_map('trim', $value);
             }
             if ($header[$key] == "author.person.name") {
-                $value = explode(",", $value);
+                $value = explode("|", $value);
             }
             if (strpos($header[$key], '.') !== false) {
                 $header_array = explode(".", $header[$key]);
@@ -72,14 +73,16 @@ class CSVRecord
                     $doc["doc"][$header_array[0]][$header_array[1]][$header_array[2]][$header_array[3]] = $value;
                 }
                 if (isset($doc["doc"]["author"]["person"]["name"])) {
-                    if (count($doc["doc"]["author"]["person"]["name"]) > 1) {
+                    if (count($doc["doc"]["author"]["person"]["name"]) > 0) {
                         $i = 0;
                         foreach ($doc["doc"]["author"]["person"]["name"] as $author_name) {
                             $doc["doc"]["author"][$i]["person"]["name"] = $author_name;
                             $i++;
                         }
-                        unset($doc["doc"]["author"]["person"]);
+                    } else {
+                        $doc["doc"]["author"][0]["person"]["name"] = $doc["doc"]["author"]["person"]["name"];
                     }
+                    unset($doc["doc"]["author"]["person"]);
                 }
 
             } else {

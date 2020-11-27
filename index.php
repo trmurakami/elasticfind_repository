@@ -54,18 +54,6 @@ require 'inc/meta-header.php';
                 <input type="text" name="search" class="form-control" id="searchQuery" aria-describedby="searchHelp" placeholder="<?php echo $t->gettext('Pesquise por termo ou autor'); ?>">
                 <small id="searchHelp" class="form-text text-muted"><?php echo $t->gettext('Dica: Use * para busca por radical. Ex: biblio*.'); ?></small>
             </div>
-
-            <div class="form-group">
-                <label for="selectBase"><?php echo $t->gettext('Filtre sua busca por base'); ?></label>
-                <select class="form-control" id="selectBase" name="filter[]">
-                    <option disabled selected value><?php echo $t->gettext('Todas as bases'); ?></option>
-                    <option value="base:&quot;Livros&quot;" style="color:#333"><?php echo $t->gettext('Livros'); ?></option>
-                    <option value="base:&quot;Partituras&quot;" style="color:#333"><?php echo $t->gettext('Partituras'); ?></option>
-                    <option value="base:&quot;Produção científica&quot;" style="color:#333"><?php echo $t->gettext('Produção Científica'); ?></option>
-                    <option value="base:&quot;Teses e dissertações&quot;" style="color:#333"><?php echo $t->gettext('Teses e Dissertações'); ?></option>
-                    <option value="base:&quot;Trabalhos acadêmicos&quot;" style="color:#333"><?php echo $t->gettext('Trabalhos acadêmicos'); ?></option>
-                </select>
-            </div>                         
             <button type="submit" class="btn btn-primary mt-3"><?php echo $t->gettext('Pesquisar'); ?></button>
         </form>
 
