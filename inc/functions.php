@@ -763,7 +763,11 @@ class Homepage
                     <div class="card-body">';
 
                     if (!empty($r["_source"]['name'])) {
-                        echo '<h5 class="card-title"><a href="item/'.$r['_id'].'">'.$r["_source"]['name'].'';
+                        if (!empty($r["_source"]['url'])) {
+                            echo '<h5 class="card-title"><a href="'.$r["_source"]['url'].'">'.$r["_source"]['name'].'';
+                        } else {
+                            echo '<h5 class="card-title"><a href="item/'.$r['_id'].'">'.$r["_source"]['name'].'';
+                        }
                         if (!empty($r["_source"]['datePublished'])) {
                             echo ' ('.$r["_source"]['datePublished'].')';
                         }
