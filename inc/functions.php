@@ -69,7 +69,7 @@ class Record
     {
         $this->id = $record["_id"];
         $this->name = $record["_source"]["name"];
-        $this->base = $record["_source"]["base"][0];
+        $this->base = $record["_source"]["base"];
         $this->type = ucfirst(strtolower($record["_source"]["type"]));
         if (isset($record["_source"]["original"]["type"])) {
             $this->originalType = ucfirst(strtolower($record["_source"]["original"]["type"]));
@@ -80,7 +80,9 @@ class Record
         if (isset($record["_source"]["dateCreated"])) {
             $this->dateCreated = $record["_source"]["dateCreated"];
         }
-        $this->languageArray = $record["_source"]["language"];
+        if (isset($record["_source"]["language"])) {
+            $this->languageArray = $record["_source"]["language"];
+        }
         if (isset($record["_source"]["country"])) {
             $this->countryArray = $record["_source"]["country"];
         }

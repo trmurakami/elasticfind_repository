@@ -53,7 +53,7 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
                         <?php
                         $record = new Record($cursor, $show_metrics);
                         $record->completeRecordMetadata($t, $url_base, $csl_abnt);
-                        ?>                   
+                        ?>
 
                         </div>
                         <div class="col-4">  
