@@ -59,6 +59,7 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
                         <div class="col-4">  
 
                         <div class="uk-card uk-card-body">
+                            <!--
                             <h5 class="uk-panel-title mt-5">Ver registro no DEDALUS</h5>
                             <ul class="uk-nav uk-margin-top uk-margin-bottom">
                                 <hr>
@@ -66,6 +67,7 @@ $cursor = Elasticsearch::get($_GET['_id'], null);
                                     <a target="_blank" rel="noopener noreferrer" class="uk-button uk-button-primary uk-button-small" href="http://dedalus.usp.br/F/?func=direct&doc_number=<?php echo $cursor["_id"];?>" target="_blank" rel="noopener noreferrer nofollow">Ver no Dedalus</a>
                                 </li>
                             </ul>
+                            -->
                             <h5 class="uk-panel-title">Exportar registro bibliográfico</h5>
                             <ul class="uk-nav uk-margin-top uk-margin-bottom">
                                 <hr>
