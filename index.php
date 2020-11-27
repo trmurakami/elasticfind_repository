@@ -43,7 +43,7 @@ require 'inc/meta-header.php';
 
 <main role="main">
 
-    <div class="jumbotron">
+    <div class="jumbotron" style="background-image: url(<?php echo $background_1; ?>); background-size: 100%;">
         <div class="container">
         <h1 class="display-5 mt-5 mb-3"><?php echo $branch; ?></h1>
         <p><?php echo $branch_description; ?></p>
