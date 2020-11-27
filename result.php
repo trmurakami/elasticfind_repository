@@ -159,10 +159,42 @@ $get_data = $_GET;
                                                 <img class="card-img-top" src="'.$file.'" alt="Book Cover">
                                             </div>';
                                             } else {
-                                                echo '<img class="card-img" src="http://covers.openlibrary.org/b/isbn/'.$r["_source"]['isbn'].'-S.jpg" width="60" height="60" alt="Book Cover">';
+                                                if ($download_covers == true) {
+                                                    if (isset($r["_source"]["url"])) {
+                                                        if (strpos($r["_source"]["url"], '.pdf') !== false) {
+                                                            if (file_exists('inc/images/covers/'.$r["_source"]['isbn'].'.jpg')) {
+                                                                echo '<img src="inc/images/covers/'.$r["_source"]['isbn'].'.jpg">';
+                                                            } else {
+                                                                if(file_put_contents('tmp/'.$r["_source"]['isbn'].'.pdf',file_get_contents($r["_source"]["url"]))) { 
+                                                                    echo "File downloaded successfully";
+                                                                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                                                                    $pdf_file_to_test   = 'tmp/'.$r["_source"]['isbn'].'.pdf';
+                                                                    if (finfo_file($finfo, $pdf_file_to_test) === 'application/pdf') {
+                                                                        $pdf_file   = 'tmp/'.$r["_source"]['isbn'].'.pdf[0]';
+                                                                        $save_to    = 'inc/images/covers/'.$r["_source"]['isbn'].'.jpg';
+                                                                        $img = new imagick($pdf_file);
+                                                                        $img->setResolution(60, 60);
+                                                                        //set new format
+                                                                        $img->setImageFormat('jpg');
+                                                                        //save image file
+                                                                        $img->writeImage($save_to);
+                                                                        //echo '<img src="inc/images/covers/'.$r["_source"]['isbn'].'.jpg">';
+                                                                    }
+                                                                } else { 
+                                                                    echo "File downloading failed."; 
+                                                                }
+        
+        
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     ?>
+                                    <?php
+
+                                        ?>
                                 </div>
                             </div>
 
