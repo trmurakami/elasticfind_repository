@@ -762,7 +762,7 @@ class Homepage
                         $file = "";
                     }
                     if (file_exists($file)) {
-                        echo '<img class="card-img" src="'.$file.'" width="60" height="60" alt="Book Cover">';
+                        echo '<img class="card-img" src="'.$file.'" width="100%" height="100%" alt="Book Cover">';
                     } else {
                         echo '<img class="card-img" src="http://covers.openlibrary.org/b/isbn/'.$r["_source"]['isbn'].'-S.jpg" width="60" height="60" alt="Book Cover">';
                     }
