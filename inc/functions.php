@@ -756,7 +756,16 @@ class Homepage
                 <div class="col-md-1">
                 ';
                 if (!empty($r["_source"]['isbn'])) {
-                    echo '<img class="card-img" src="http://covers.openlibrary.org/b/isbn/'.$r["_source"]['isbn'].'-S.jpg" width="60" height="60" alt="Book Cover">';
+                    if (!empty($r["_source"]['isbn'])) {
+                        $file = 'inc/images/covers/'.$r["_source"]['isbn'].'.jpg';
+                    } else {
+                        $file = "";
+                    }
+                    if (file_exists($file)) {
+                        echo '<img class="card-img" src="'.$file.'" width="60" height="60" alt="Book Cover">';
+                    } else {
+                        echo '<img class="card-img" src="http://covers.openlibrary.org/b/isbn/'.$r["_source"]['isbn'].'-S.jpg" width="60" height="60" alt="Book Cover">';
+                    }
                 }
                 echo '</div>
                 <div class="col-md-11">

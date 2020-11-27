@@ -132,6 +132,9 @@ $get_data = $_GET;
                                 <?php if (!empty($r["_source"]['isPartOf']['issn'])) : ?>
                                     <p class="text-muted"><b>ISSN:</b> <a href="result.php?filter[]=isPartOf.issn:&quot;<?php echo $r["_source"]['isPartOf']['issn'];?>&quot;"><?php echo $r["_source"]['isPartOf']['issn'];?></a></li>                                        
                                 <?php endif; ?>
+                                <?php if (!empty($r["_source"]['isbn'])) : ?>
+                                    <p class="text-muted"><b>ISBN:</b> <a href="result.php?filter[]=isbn:&quot;<?php echo $r["_source"]['isbn'];?>&quot;"><?php echo $r["_source"]['isbn'];?></a></li>
+                                <?php endif; ?>
                                 <?php if (!empty($r["_source"]['EducationEvent']['name'])) : ?>
                                     <p class="text-muted"><b>Nome do evento:</b> <?php echo $r["_source"]['EducationEvent']['name'];?></p>
                                 <?php endif; ?>
