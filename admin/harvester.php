@@ -178,7 +178,7 @@ if (isset($_GET["oai"])) {
             //print_r($id);
             //print_r($body);
 
-            $resultado = elasticsearch::elastic_update($id, $type, $body);
+            $resultado = Elasticsearch::update($id, $body);
             print_r($resultado);
 
             unset($id);

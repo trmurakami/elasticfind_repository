@@ -393,11 +393,12 @@ class Record
         }          
 
         /* Language */
-        foreach ($this->languageArray as $language) {
-            $languageList[] = '<a href="'.$url_base.'/result.php?filter[]=language:&quot;'.$language.'&quot;">'.$language.'</a>';
+        if (!empty($this->languageArray)) {
+            foreach ($this->languageArray as $language) {
+                $languageList[] = '<a href="'.$url_base.'/result.php?filter[]=language:&quot;'.$language.'&quot;">'.$language.'</a>';
+            }
+            echo '<p class="card-text"><b>'.$t->gettext('Idioma').':</b> '.implode("; ", $languageList).'</p>';
         }
-        echo '<p class="card-text"><b>'.$t->gettext('Idioma').':</b> '.implode("; ", $languageList).'</p>';
-        
         /* Imprint */
         if (!empty($this->publisherArray)) {
             echo '<p class="card-text"><b>'.$t->gettext('Imprenta').':</b></p>';

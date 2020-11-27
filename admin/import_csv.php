@@ -57,6 +57,10 @@ class CSVRecord
                 $value = explode("|", $value);
                 $value = array_map('trim', $value);
             }
+            if ($header[$key] == "language") {
+                $value = explode("|", $value);
+                $value = array_map('trim', $value);
+            }            
             if ($header[$key] == "author.person.name") {
                 $value = explode("|", $value);
             }
