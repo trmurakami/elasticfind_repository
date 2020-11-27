@@ -747,21 +747,14 @@ class Homepage
             echo '
             
             <div class="card bg-light mb-3">
-            <div class="card-header">'.$r["_source"]['base'][0].' | '.$r["_source"]['type'].'</div>
+            <div class="card-header">'.$r["_source"]['base'].' | '.$r["_source"]['type'].'</div>
             <div class="card-body">
                 <div class="row no-gutters">
                 <div class="col-md-1">
                 ';
-                if (!empty($r["_source"]['unidadeUSP'])) {
-                    $file = 'inc/images/logosusp/'.$r["_source"]['unidadeUSP'][0].'.jpg';
-                } else {
-                    $file = "";
+                if (!empty($r["_source"]['isbn'])) {
+                    echo '<img class="card-img" src="http://covers.openlibrary.org/b/isbn/'.$r["_source"]['isbn'].'-S.jpg" width="60" height="60" alt="Book Cover">';
                 }
-                if (file_exists($file)) {
-                    echo '<img class="card-img" src="'.$file.'" width="60" height="60" alt="Logo '.$r["_source"]['unidadeUSP'][0].'">';
-                } else {
-    
-                };
                 echo '</div>
                 <div class="col-md-11">
                     <div class="card-body">';

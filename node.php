@@ -4,6 +4,7 @@
  */
 
 require 'inc/config.php';
+require 'inc/functions.php';
 
 
 /* Citeproc-PHP*/

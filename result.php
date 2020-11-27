@@ -103,7 +103,7 @@ $get_data = $_GET;
                         <div class="card">
                             <div class="card-body">
 
-                                <h6 class="card-subtitle mb-2 text-muted"><?php echo $r["_source"]['tipo'];?> | <?php echo $r["_source"]['source'];?></h6>
+                                <h6 class="card-subtitle mb-2 text-muted"><?php echo $r["_source"]['base'];?> | <?php echo $r["_source"]['type'];?></h6>
                                 <h5 class="card-title text-dark"><?php echo $r["_source"]['name']; ?> (<?php echo $r["_source"]['datePublished'];?>)</h5>
 
 
