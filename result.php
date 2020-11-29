@@ -145,6 +145,16 @@ $get_data = $_GET;
                                             <?php compararRegistros::match_id($id_match["id_match"], $id_match["nota"]);?>
                                         <?php endforeach;?>
                                     <?php endif; ?>
+
+                                    <form class="form-signin" method="post" action="editor/index.php">
+                                        <?php
+                                            $jsonRecord = json_encode($r["_source"]);
+                                        ?>
+                                        <input type="hidden" id="coletaprod_id" name="coletaprod_id" value="<?php echo $r["_id"] ?>">
+                                        <input type="hidden" id="record" name="record" value="<?php echo urlencode($jsonRecord) ?>">
+                                        <button class="btn btn-warning" type="submit">Editar</button>
+                                    </form>
+
                                 </div>
                                 <div class="col-md-auto">
                                     <?php
